@@ -1,74 +1,296 @@
-.student-profile-card {
-  margin-top: 50px;
-  background: rgba(255, 255, 255, 0.35);
-  padding: 20px;
-  border-radius: 20px;
-  margin-bottom: 24px;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* ════════════════════════════
+   STUDENT PROFILE CARD
+════════════════════════════ */
+
+.sp-card {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  margin-bottom: 25px;
+  margin-top: 10px;
 }
 
-.profile-top {
+/* ════════════════════════════
+   LEFT PANEL
+════════════════════════════ */
+
+.sp-left {
+  background: #f9f5f0;
+  border-right: 1px solid #e8e0d6;
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1.25rem;
 }
 
-.student-avatar {
+/* ── Avatar ── */
+.sp-avatar-frame {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
-}
-
-.profile-buttons {
-  margin-top: 14px;
+  background: #ffffff;
+  border: 3px solid #e8e0d6;
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.edit-btn,
-.share-btn {
-  padding: 6px 18px;
-  border: none;
+.sp-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sp-avatar-initials {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #b5651d;
+}
+
+/* ── Side Name ── */
+.sp-side-name {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2d1f0e;
+  text-align: center;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* ── UID Pill ── */
+.sp-uid-pill {
+  background: #ffffff;
+  border: 1px solid #e8e0d6;
+  color: #8b5e3c;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 14px;
   border-radius: 20px;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+
+/* ── Edit Button ── */
+.sp-edit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #d6c5b0;
+  background: #ffffff;
+  color: #6b4c2a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
+  transition: background 0.15s;
+}
+
+.sp-edit-btn:hover {
+  background: #f0e8df;
+}
+
+/* ════════════════════════════
+   RIGHT PANEL
+════════════════════════════ */
+
+.sp-right {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Header ── */
+.sp-r-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-r-name {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.sp-r-college {
+  font-size: 13px;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+/* ── Divider ── */
+.sp-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+/* ── Fields Grid ── */
+.sp-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.sp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sp-label {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.sp-val {
+  font-size: 14px;
   font-weight: 600;
-  color: white;
-  font-family: inherit;
+  color: #1a1a1a;
 }
 
-.edit-btn {
-  background: #00c6ff;
-}
-
-.share-btn {
-  background: #222;
-}
-
-.student-info {
-  margin-top: 18px;
-}
-
-.student-info div {
-  margin-bottom: 5px;
-  padding-bottom: 6px;
-}
-
-.student-info label {
+/* ── Year Badge ── */
+.sp-year-badge {
+  display: inline-block;
+  background: #f9f5f0;
+  border: 1px solid #e8e0d6;
+  color: #8b5e3c;
   font-size: 12px;
-  color: #444;
-}
-
-.student-info p {
-  margin: 3px 0 0;
   font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  width: fit-content;
 }
 
-@media (max-width: 480px) {
-  .student-avatar {
-    width: 86px;
-    height: 86px;
+/* ════════════════════════════
+   TABLET (max-width: 768px)
+════════════════════════════ */
+@media (max-width: 768px) {
+  .sp-card {
+    grid-template-columns: 200px 1fr;
+  }
+
+  .sp-left {
+    padding: 2rem 1.25rem;
+  }
+
+  .sp-avatar-frame {
+    width: 80px;
+    height: 80px;
+  }
+
+  .sp-avatar-initials {
+    font-size: 24px;
+  }
+
+  .sp-r-name {
+    font-size: 21px;
+  }
+
+  .sp-right {
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .sp-fields {
+    gap: 0.875rem;
+  }
+}
+
+/* ════════════════════════════
+   MOBILE (max-width: 600px)
+════════════════════════════ */
+@media (max-width: 600px) {
+  .sp-card {
+    grid-template-columns: 1fr;
+    border-radius: 18px;
+  }
+
+  .sp-left {
+    border-right: none;
+    border-bottom: 1px solid #e8e0d6;
+    padding: 1.5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .sp-avatar-frame {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+
+  .sp-avatar-initials {
+    font-size: 20px;
+  }
+
+  /* Stack name + uid + button in a column beside avatar */
+  .sp-left-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1;
+    min-width: 130px;
+  }
+
+  .sp-side-name {
+    text-align: left;
+    font-size: 15px;
+  }
+
+  .sp-edit-btn {
+    width: auto;
+    padding: 8px 16px;
+  }
+
+  .sp-right {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .sp-r-name {
+    font-size: 18px;
+  }
+
+  .sp-fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+}
+
+/* ════════════════════════════
+   SMALL MOBILE (max-width: 400px)
+════════════════════════════ */
+@media (max-width: 400px) {
+  .sp-fields {
+    grid-template-columns: 1fr;
   }
 }

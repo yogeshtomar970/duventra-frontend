@@ -26,7 +26,7 @@
   display: flex;
   height: calc(100dvh - var(--nav-height));
   
-  background: var(--msg-bg);
+  background: beige;
   overflow: hidden;
   position: relative;
 }

@@ -5,10 +5,10 @@
 
 .pp-page {
   min-height: 100vh;
-  background: #0d1128;
+  background: beige;
   color: #e8eaf6;
   padding-bottom: 80px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 /* ── Header ─────────────────────────────────── */
@@ -65,7 +65,7 @@
 
 /* ── Hero Banner ─────────────────────────────── */
 .pp-hero {
-  background: linear-gradient(135deg, rgba(108, 99, 255, 0.15) 0%, rgba(167, 139, 250, 0.08) 100%);
+  background: beige;
   border-bottom: 1px solid rgba(108, 99, 255, 0.2);
   padding: 28px 20px;
   display: flex;
@@ -85,13 +85,13 @@
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #fff;
+  color: black;
 }
 
 .pp-hero-sub {
   margin: 0;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(0, 0, 0, 0.51);
   line-height: 1.6;
   max-width: 520px;
 }
@@ -106,7 +106,7 @@
 .pp-section-label {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.463);
   text-transform: uppercase;
   letter-spacing: 1.2px;
   margin: 0 0 12px 4px;
@@ -128,8 +128,8 @@
 }
 
 .pp-card--open {
-  border-color: rgba(108, 99, 255, 0.4);
-  background: rgba(108, 99, 255, 0.06);
+  border-color: #b5651d;
+  background: rgba(181, 100, 29, 0.096);
 }
 
 .pp-card-header {
@@ -161,18 +161,18 @@
   flex: 1;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 0, 0, 0.91);
 }
 
 .pp-card-chevron {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.4);
+  color: #b5651d;
   flex-shrink: 0;
   transition: color 0.2s;
 }
 
 .pp-card--open .pp-card-chevron {
-  color: #a78bfa;
+  color: #b5651d;
 }
 
 /* ── Card Body ───────────────────────────────── */
@@ -196,7 +196,7 @@
 }
 
 .pp-item {
-  border-left: 2px solid rgba(108, 99, 255, 0.35);
+  border-left: 2px solid #b5651d;
   padding-left: 12px;
 }
 
@@ -204,7 +204,7 @@
   margin: 0 0 4px;
   font-size: 12px;
   font-weight: 700;
-  color: #a78bfa;
+  color: #b5651d;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -212,7 +212,7 @@
 .pp-item-text {
   margin: 0;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(0, 0, 0, 0.643);
   line-height: 1.6;
 }
 
@@ -237,6 +237,6 @@
 .pp-footer-note p {
   margin: 0;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0, 0, 0, 0.5);
   line-height: 1.6;
 }

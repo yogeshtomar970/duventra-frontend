@@ -4,32 +4,50 @@ import BottomNav from "../component/BottomNav";
 import useMessagePage from "../hooks/useMessagePage.js";
 
 // ── Sub-components ────────────────────────────
-import MsgSidebar      from "./MsgSidebar.jsx";
-import MsgChatWindow   from "./MsgChatWindow.jsx";
-import MsgEmptyState   from "./MsgEmptyState.jsx";
-import MsgDeleteModal  from "./MsgDeleteModal.jsx";
+import MsgSidebar from "./MsgSidebar.jsx";
+import MsgChatWindow from "./MsgChatWindow.jsx";
+import MsgEmptyState from "./MsgEmptyState.jsx";
+import MsgDeleteModal from "./MsgDeleteModal.jsx";
 
 // ── Global styles ─────────────────────────────
 import "../styles/MessageCard.css";
 
 export default function MessageCard() {
   const {
-    myId, socket,
-    inbox, selectedChat, messages,
-    inputText, search, searchResults,
-    showSearch, isTyping, onlineUsers,
-    loadingInbox, loadingChat, loadingSearch, sending,
-    contextMenu, showDeleteConfirm,
-    chatBodyRef, inputRef,
-    setSearch, setShowSearch, setSearchResults,
-    setContextMenu, setShowDeleteConfirm,
-    openChat, handleSend, handleInputChange,
-    handleBack, handleDeleteConversation, handleDeleteMessage,
+    myId,
+    socket,
+    inbox,
+    selectedChat,
+    messages,
+    inputText,
+    search,
+    searchResults,
+    showSearch,
+    isTyping,
+    onlineUsers,
+    loadingInbox,
+    loadingChat,
+    loadingSearch,
+    sending,
+    contextMenu,
+    showDeleteConfirm,
+    chatBodyRef,
+    inputRef,
+    setSearch,
+    setShowSearch,
+    setSearchResults,
+    setContextMenu,
+    setShowDeleteConfirm,
+    openChat,
+    handleSend,
+    handleInputChange,
+    handleBack,
+    handleDeleteConversation,
+    handleDeleteMessage,
   } = useMessagePage();
 
   return (
     <div className="msg-page">
-
       {/* ── Sidebar (inbox + search) ── */}
       <div className={selectedChat ? "msg-sidebar-hidden" : ""}>
         <MsgSidebar
@@ -48,7 +66,10 @@ export default function MessageCard() {
             setSearchResults([]);
           }}
           onSearchChange={setSearch}
-          onSearchClear={() => { setSearch(""); setSearchResults([]); }}
+          onSearchClear={() => {
+            setSearch("");
+            setSearchResults([]);
+          }}
           onOpenChat={openChat}
         />
       </div>
@@ -87,8 +108,7 @@ export default function MessageCard() {
           onConfirm={handleDeleteConversation}
         />
       )}
- <BottomNav/>
+      <BottomNav />
     </div>
-    
   );
 }

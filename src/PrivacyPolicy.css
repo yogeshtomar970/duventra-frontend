@@ -13,7 +13,7 @@
 
 /* ── Header ─────────────────────────────────── */
 .pp-header {
-  background: linear-gradient(135deg, #0e132f 0%, #1a2152 100%);
+  background: #b5651d;
   padding: 56px 20px 24px;
   display: flex;
   align-items: center;

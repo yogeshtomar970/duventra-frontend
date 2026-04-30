@@ -1,0 +1,20 @@
+.share-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;justify-content:center;align-items:flex-end;z-index:3000}
+.share-modal{width:100%;max-width:480px;background:#fff;border-radius:22px 22px 0 0;padding:16px 20px 28px;animation:smU .3s cubic-bezier(.34,1.2,.64,1)}
+@keyframes smU{from{transform:translateY(60%);opacity:0}to{transform:translateY(0);opacity:1}}
+.share-modal::before{content:'';display:block;width:40px;height:4px;background:#ddd;border-radius:2px;margin:0 auto 14px}
+.share-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.share-header h3{margin:0;font-size:18px;font-weight:700}
+.close-icon{font-size:20px;cursor:pointer;color:#666;transition:color .2s}
+.close-icon:hover{color:#111}
+.share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center}
+.share-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;padding:8px 4px;border-radius:10px;transition:background .18s}
+.share-item:hover{background:#f5f5f5}
+.share-item span{font-size:13px;color:#333;font-weight:500}
+.icon{font-size:36px;padding:12px;border-radius:50%;color:white}
+.whatsapp{background:#25d366}
+.instagram{background:radial-gradient(circle at 30% 30%,#feda75,#d62976,#962fbf)}
+.telegram{background:#229ed9}
+.facebook{background:#1877f2}
+.link{background:#6c63ff}
+.bluetooth{background:#0a3d91}
+@media (min-width:600px){.share-overlay{align-items:center}.share-modal{border-radius:20px;max-width:420px;margin-bottom:30px}}

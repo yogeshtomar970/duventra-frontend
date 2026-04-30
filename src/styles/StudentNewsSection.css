@@ -1,0 +1,19 @@
+.news-wrapper {
+  background: rgba(255, 255, 255, 0.35);
+  padding: 15px;
+  border-radius: 20px;
+}
+
+.news-badge {
+  background: #eee;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.news-empty {
+  text-align: center;
+  color: #888;
+}

@@ -1,0 +1,21 @@
+/* ── Error / Empty state wrapper ── */
+.event-feed-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding-top: 112px;
+  gap: 16px;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.event-feed-state p {
+  font-size: 15px;
+  margin: 0;
+}
+
+.feed-state--error { color: #dc2626; }
+.feed-state--empty { color: #888;    }

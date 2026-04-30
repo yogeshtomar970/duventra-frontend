@@ -1,0 +1,41 @@
+/* ══════════════════════════════════════
+   UploadPopup.css
+   ══════════════════════════════════════ */
+
+.upload-popup {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  background: white;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+  border-radius: 14px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  z-index: 1100;
+  animation: navPopIn 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes navPopIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);    }
+}
+
+.upload-popup button {
+  background: none;
+  border: none;
+  padding: 11px 14px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 9px;
+  color: #1f2937;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.upload-popup button:hover {
+  background: #f9fafb;
+}

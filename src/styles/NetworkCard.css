@@ -1,0 +1,63 @@
+.modern-member-card {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 14px;
+  border-radius: 18px;
+  width: 155px;
+  flex-shrink: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+.modern-member-card:hover {
+  transform: translateY(-4px);
+}
+
+.modern-member-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #111;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.modern-member-card h4 {
+  margin: 6px 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.member-info p {
+  font-size: 12px;
+  margin: 4px 0;
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.s-join-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 6px 0;
+  border: none;
+  border-radius: 20px;
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-family: inherit;
+}
+
+.s-join-btn:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 480px) {
+  .modern-member-card {
+    width: 135px;
+  }
+}

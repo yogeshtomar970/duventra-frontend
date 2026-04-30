@@ -1,0 +1,82 @@
+/* ── Delete confirm modal ── */
+.msg-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: msg-fade-in 0.18s ease;
+}
+@keyframes msg-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.msg-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 28px 24px 22px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  animation: msg-scale-in 0.2s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+@keyframes msg-scale-in {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.msg-modal-icon {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.msg-modal h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.msg-modal p {
+  margin: 0 0 20px;
+  font-size: 0.88rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.msg-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.msg-modal-cancel,
+.msg-modal-confirm {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.15s, transform 0.12s;
+}
+
+.msg-modal-cancel {
+  background: #f3f4f6;
+  color: #374151;
+}
+.msg-modal-cancel:hover { background: #e5e7eb; }
+
+.msg-modal-confirm {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+}
+.msg-modal-confirm:hover { opacity: 0.9; transform: translateY(-1px); }

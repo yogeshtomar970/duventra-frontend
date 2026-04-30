@@ -1,0 +1,33 @@
+.hs-app-info {
+  text-align: center;
+  padding: 24px 0 8px;
+  color: #6b7280;
+}
+
+.hs-app-logo {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0e132f;
+  font-family: cursive, sans-serif;
+  margin-bottom: 6px;
+}
+
+.hs-app-info p {
+  font-size: 12px;
+  margin: 0 0 10px;
+}
+
+.hs-app-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #b5651d;
+}
+
+.hs-app-links span {
+  cursor: pointer;
+}
+.hs-app-links span:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,33 @@
+/* ══════════════════════════════════════
+   NavLogo.css
+   ══════════════════════════════════════ */
+
+.logoimg {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.navbar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+
+.logo {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+  font-family: cursive, sans-serif;
+}
+
+@media (max-width: 380px) {
+  .logo { font-size: 15px; }
+}

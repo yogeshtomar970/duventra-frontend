@@ -1,0 +1,38 @@
+/* ── No chat selected (desktop only) ── */
+.msg-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--msg-bg);
+  text-align: center;
+  padding: 24px;
+}
+
+.msg-empty-illustration {
+  font-size: 4rem;
+  opacity: 0.5;
+  filter: grayscale(0.3);
+}
+
+.msg-empty-state h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.msg-empty-state p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #9ca3af;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+/* Hide on mobile — chat window takes full screen */
+@media (max-width: 768px) {
+  .msg-empty-state { display: none; }
+}

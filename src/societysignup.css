@@ -1,0 +1,62 @@
+.societycontainer {
+  width: 100%;
+  min-height: 100vh;
+  background:
+    beige;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.societysignup {
+  width: 100%;
+  max-width: 460px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(10px);
+  padding: 26px 22px;
+  border-radius: 20px;
+  margin: 20px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+.societysignup h2 {
+  text-align: center;
+  margin-bottom: 16px;
+  color: #0e132f;
+  font-family: "Poppins", sans-serif;
+}
+.societysignup input,
+.societysignup select {
+  width: 100%;
+  padding: 11px 14px;
+  margin: 7px 0;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  font-size: 14px;
+  box-sizing: border-box;
+  font-family: "Poppins", inherit;
+  outline: none;
+  background: white;
+  transition: border-color 0.2s;
+}
+.societysignup input:focus {
+  border-color: #b5651d;
+}
+.btn {
+  width: 100%;
+  padding: 13px;
+  background:#b5651d;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 10px;
+  font-family: "Poppins", inherit;
+  transition: opacity 0.2s;
+}
+.btn:hover {
+  opacity: 0.88;
+}

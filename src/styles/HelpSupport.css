@@ -1,0 +1,29 @@
+/* ══════════════════════════════════════
+   HelpSupport.css — page + shared only
+   Component styles are in styles/ folder
+   ══════════════════════════════════════ */
+
+.hs-page {
+  min-height: 100vh;
+  background: beige;
+  padding-bottom: 80px;
+}
+
+.hs-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hs-section {
+  background: transparent;
+  padding: 10px 0;
+}
+
+.hs-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0e132f;
+  margin: 0 0 12px;
+}

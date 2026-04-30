@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* ── Card Shell ── */
+.pc4-card {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  margin-bottom: 4px;
+}
+
+/* ── Left Panel ── */
+.pc4-left {
+  background: #f9f5f0;
+  padding: 9rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  border-right: 1px solid #e8e0d6;
+}
+
+/* ── Avatar ── */
+.pc4-avatar-frame {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid #e8e0d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pc4-avatar-initials {
+  font-family: 'Fraunces', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: #b5651d;
+}
+
+.pc4-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Side Name ── */
+.pc4-side-name {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2d1f0e;
+  text-align: center;
+  line-height: 1.35;
+}
+
+/* ── Type Pill ── */
+.pc4-type-pill {
+  background: #fff;
+  border: 1px solid #e8e0d6;
+  color: #8b5e3c;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.4px;
+}
+
+/* ── Edit Button ── */
+.pc4-edit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #d6c5b0;
+  background: #fff;
+  color: #6b4c2a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  /* margin-top: auto; */
+  transition: background 0.15s;
+}
+
+.pc4-edit-btn:hover {
+  background: #f0e8df;
+}
+
+/* ── Right Panel ── */
+.pc4-right {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Right Header ── */
+.pc4-r-name {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #b5651d;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.pc4-r-college {
+  font-size: 13px;
+  color: #777;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Divider ── */
+.pc4-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+/* ── Fields Grid ── */
+.pc4-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.pc4-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pc4-label {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.pc4-val {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ── Bio ── */
+.pc4-bio {
+  background: #f7f7f7;
+  border-left: 3px solid #b5651d;
+  border-radius: 0 14px 14px 0;
+  padding: 1rem 1.25rem;
+}
+
+.pc4-bio-heading {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+
+.pc4-bio-text {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.75;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .pc4-card {
+    grid-template-columns: 1fr;
+  }
+
+  .pc4-left {
+    border-right: none;
+    border-bottom: 1px solid #e8e0d6;
+    border-radius: 0;
+    padding: 1.5rem;
+  }
+
+  .pc4-avatar-frame {
+    width: 80px;
+    height: 80px;
+  }
+
+  .pc4-avatar-initials {
+    font-size: 24px;
+  }
+
+  .pc4-right {
+    padding: 1.5rem;
+  }
+
+  .pc4-r-name {
+    font-size: 20px;
+  }
+
+  .pc4-fields {
+    grid-template-columns: 1fr;
+  }
+}

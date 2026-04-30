@@ -1,0 +1,25 @@
+/* ══════════════════════════════════════════
+   Profile.css  —  container level only
+   Component styles are in their own CSS files
+   ══════════════════════════════════════════ */
+
+.student-container {
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background:
+    radial-gradient(at top left, #fbc2eb, transparent 60%),
+    radial-gradient(at bottom right, #a18cd1, transparent 60%),
+    linear-gradient(135deg, #fbc2eb, #a6c1ee, #c2e9fb);
+}
+
+@media (max-width: 480px) {
+  .student-container {
+    padding: 12px;
+    padding-bottom: 70px;
+    max-width: 100%;
+  }
+}

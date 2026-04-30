@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* ── Card Shell ── */
+.pnt-card {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e8e0d6;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  margin-bottom: 25px;
+}
+
+/* ── Header ── */
+.pnt-header {
+  background: #f9f5f0;
+  border-bottom: 1px solid #e8e0d6;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pnt-title {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+/* ── Toggle Pill ── */
+.pnt-toggle {
+  display: flex;
+  gap: 4px;
+  background: #fff;
+  border: 1px solid #e8e0d6;
+  border-radius: 20px;
+  padding: 3px;
+}
+
+.pnt-tog {
+  padding: 6px 18px;
+  border-radius: 16px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b6e5a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pnt-tog--active {
+  background: #b5651d;
+  color: #fff;
+}
+
+/* ── Body ── */
+.pnt-body {
+  padding: 4px;
+}
+
+/* ── Empty State ── */
+.pnt-empty {
+  text-align: center;
+  color: #c4b5a5;
+  font-size: 13px;
+  font-style: italic;
+  padding: 2rem 0;
+}
+
+/* ── Post Grid ── */
+.post-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  justify-items: center;
+}
+
+.post-grid .event-card {
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .post-grid {
+    grid-template-columns: repeat(3, minmax(0, 440px));
+    justify-content: center;
+    gap: 6px;
+  }
+}
+
+/* ── News Section ── */
+.news-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  justify-items: center;
+}
+
+.news-section .nc-card {
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 0 !important;
+}
+
+.news-section .nc-card-img-wrap {
+  max-height: 200px;
+}
+
+.news-section .nc-card-desc {
+  -webkit-line-clamp: 3;
+  font-size: 13px;
+}
+
+@media (min-width: 600px) {
+  .news-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .news-section .nc-card {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .news-section {
+    grid-template-columns: repeat(3, minmax(0, 440px));
+    justify-content: center;
+    gap: 6px;
+  }
+}

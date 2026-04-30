@@ -1,0 +1,16 @@
+/* ══════════════════════════════════════
+   Login.css — page container only
+   Component styles are in styles/ folder
+   ══════════════════════════════════════ */
+
+.logincontainer {
+  width: 100%;
+  min-height: 100vh;
+  background:
+    beige;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}

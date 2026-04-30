@@ -1,0 +1,30 @@
+.searchbar-container {
+  display: flex;
+  align-items: center;
+  background: #f1f1f1;
+  padding: 8px 12px;
+  border-radius: 25px;
+  width: 92%;
+  margin: 10px auto;
+  box-shadow: 0 0 4px rgba(0,0,0,0.12);
+}
+
+.search-icon {
+  font-size: 16px;
+  opacity: 0.6;
+  margin-right: 8px;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .searchbar-container {
+    width: 96%;
+  }
+}

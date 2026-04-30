@@ -1,0 +1,242 @@
+/* ═══════════════════════════════════════════════
+   PRIVACY POLICY PAGE
+   Theme: matches app dark navy (#0e132f / #161e40)
+═══════════════════════════════════════════════ */
+
+.pp-page {
+  min-height: 100vh;
+  background: #0d1128;
+  color: #e8eaf6;
+  padding-bottom: 80px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ── Header ─────────────────────────────────── */
+.pp-header {
+  background: linear-gradient(135deg, #0e132f 0%, #1a2152 100%);
+  padding: 56px 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.pp-back-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.pp-back-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.pp-header-text {
+  flex: 1;
+}
+.pp-header-text h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.pp-header-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.pp-header-icon {
+  font-size: 28px;
+  opacity: 0.6;
+}
+
+/* ── Hero Banner ─────────────────────────────── */
+.pp-hero {
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.15) 0%, rgba(167, 139, 250, 0.08) 100%);
+  border-bottom: 1px solid rgba(108, 99, 255, 0.2);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.pp-hero-icon {
+  font-size: 44px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pp-hero-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pp-hero-sub {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  max-width: 520px;
+}
+
+/* ── Content Area ────────────────────────────── */
+.pp-content {
+  padding: 20px 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pp-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin: 0 0 12px 4px;
+}
+
+/* ── Accordion ───────────────────────────────── */
+.pp-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pp-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.pp-card--open {
+  border-color: rgba(108, 99, 255, 0.4);
+  background: rgba(108, 99, 255, 0.06);
+}
+
+.pp-card-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.18s;
+}
+
+.pp-card-header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pp-card-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.pp-card-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pp-card-chevron {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.pp-card--open .pp-card-chevron {
+  color: #a78bfa;
+}
+
+/* ── Card Body ───────────────────────────────── */
+.pp-card-body {
+  padding: 0 16px 16px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: ppFadeIn 0.2s ease;
+}
+
+@keyframes ppFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pp-item {
+  border-left: 2px solid rgba(108, 99, 255, 0.35);
+  padding-left: 12px;
+}
+
+.pp-item-subtitle {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pp-item-text {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+}
+
+/* ── Footer Note ─────────────────────────────── */
+.pp-footer-note {
+  margin-top: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pp-footer-note span {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pp-footer-note p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+}

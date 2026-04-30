@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* ── Overlay ── */
+.cm2-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1rem;
+}
+
+/* ── Modal Box ── */
+.cm2-modal {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e8e0d6;
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.cm2-header {
+  background: #f9f5f0;
+  border-bottom: 1px solid #e8e0d6;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.cm2-header-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e8e0d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cm2-header-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1;
+  margin: 0;
+}
+
+.cm2-header-sub {
+  font-size: 11px;
+  color: #8b6e5a;
+  margin: 4px 0 0;
+}
+
+/* ── Body ── */
+.cm2-body {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ── Add Button ── */
+.cm2-add-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px;
+  border-radius: 14px;
+  border: 1.5px dashed #d6c5b0;
+  background: #f9f5f0;
+  color: #6b4c2a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background 0.15s;
+}
+
+.cm2-add-btn:hover {
+  background: #f0e8df;
+}
+
+/* ── Empty State ── */
+.cm2-empty {
+  text-align: center;
+  color: #bbb;
+  font-size: 13px;
+  font-style: italic;
+  padding: 1.5rem 0;
+}
+
+/* ── Member List ── */
+.cm2-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 1rem;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.cm2-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #f9f5f0;
+  border: 1px solid #e8e0d6;
+}
+
+.cm2-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e8e0d6;
+  flex-shrink: 0;
+}
+
+.cm2-info {
+  flex: 1;
+}
+
+.cm2-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.cm2-post {
+  font-size: 11px;
+  color: #b5651d;
+  margin: 3px 0 0;
+}
+
+.cm2-del-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #fff;
+  border: 1px solid #e8e0d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.cm2-del-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+/* ── Close Button ── */
+.cm2-close-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: 14px;
+  border: 1px solid #d6c5b0;
+  background: #fff;
+  color: #6b4c2a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cm2-close-btn:hover {
+  background: #f0e8df;
+}
+
+/* ── Divider ── */
+.cm2-divider {
+  height: 1px;
+  background: #e8e0d6;
+  margin: 1rem 0;
+}
+
+/* ── Back Button ── */
+.cm2-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #8b6e5a;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1rem;
+  transition: color 0.15s;
+}
+
+.cm2-back-btn:hover {
+  color: #6b4c2a;
+}
+
+/* ── Field Label ── */
+.cm2-field-label {
+  font-size: 10px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* ── Toggle ── */
+.cm2-toggle-wrap {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.cm2-tog {
+  flex: 1;
+  padding: 9px;
+  border-radius: 12px;
+  border: 1px solid #d6c5b0;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b4c2a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.cm2-tog.cm2-tog-active {
+  background: #b5651d;
+  border-color: #b5651d;
+  color: #fff;
+}
+
+/* ── Input ── */
+.cm2-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #d6c5b0;
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #1a1a1a;
+  background: #fff;
+  outline: none;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.cm2-input:focus {
+  border-color: #b5651d;
+}
+
+/* ── Search Button ── */
+.cm2-search-btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: 12px;
+  border: none;
+  background: #b5651d;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  margin-bottom: 0;
+  transition: background 0.15s;
+}
+
+.cm2-search-btn:hover {
+  background: #9a5518;
+}
+
+/* ── Name Search Results ── */
+.cm2-results {
+  margin-top: 10px;
+  border: 1px solid #e8e0d6;
+  border-radius: 14px;
+  overflow: hidden;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.cm2-result-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0ebe4;
+  transition: background 0.1s;
+}
+
+.cm2-result-row:last-child {
+  border-bottom: none;
+}
+
+.cm2-result-row:hover {
+  background: #f9f5f0;
+}
+
+.cm2-result-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e8e0d6;
+  flex-shrink: 0;
+}
+
+/* ── Preview Card ── */
+.cm2-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #f9f5f0;
+  border: 1px solid #e8e0d6;
+  margin-bottom: 1rem;
+}
+
+.cm2-preview-img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e8e0d6;
+  flex-shrink: 0;
+}
+
+.cm2-clear-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e8e0d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.cm2-clear-btn:hover {
+  background: #f0e8df;
+}
+
+/* ── Select ── */
+.cm2-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #d6c5b0;
+  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #fff;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.cm2-select:focus {
+  border-color: #b5651d;
+}
+
+/* ── Save Button ── */
+.cm2-save-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 14px;
+  border: none;
+  background: #b5651d;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Fraunces', serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cm2-save-btn:hover {
+  background: #9a5518;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .cm2-modal {
+    border-radius: 20px;
+    max-height: 95vh;
+  }
+
+  .cm2-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .cm2-body {
+    padding: 1rem 1.25rem;
+  }
+
+  .cm2-header-title {
+    font-size: 16px;
+  }
+}

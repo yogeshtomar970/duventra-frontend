@@ -1,0 +1,62 @@
+/* ── Single comment row ── */
+.comment-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.comment-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.comment-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+
+.comment-meta strong {
+  font-size: 13px;
+  color: #111827;
+  font-weight: 600;
+}
+
+.comment-role {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+.comment-role.student { background: #eff6ff; color: #3b82f6; }
+.comment-role.society { background: #fef3c7; color: #d97706; }
+
+.comment-time {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.comment-body p {
+  font-size: 14px;
+  margin: 0;
+  color: #374151;
+  line-height: 1.45;
+  word-break: break-word;
+}

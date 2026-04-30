@@ -1,0 +1,54 @@
+/* ── Input row ── */
+.add-comment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 16px;
+  border-top: 1px solid #f3f4f6;
+  flex-shrink: 0;
+}
+
+.add-comment input {
+  flex: 1;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 24px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  background: #f9fafb;
+  transition: border-color 0.2s, background 0.2s;
+  min-width: 0;
+}
+.add-comment input:focus {
+  border-color: #6c63ff;
+  background: white;
+}
+.add-comment input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.add-comment button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s, opacity 0.2s;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.3);
+}
+.add-comment button:hover  { transform: scale(1.1); }
+.add-comment button:active { transform: scale(0.9); }
+.add-comment button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}

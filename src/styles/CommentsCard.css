@@ -1,0 +1,82 @@
+/* ── Comments card wrapper ── */
+.comments-card {
+  width: 100%;
+  background: white;
+  border-radius: 22px 22px 0 0;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Drag handle ── */
+.comments-handle {
+  width: 40px;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  margin: 12px auto 0;
+  flex-shrink: 0;
+}
+
+/* ── Header ── */
+.comments-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px 10px;
+  border-bottom: 1px solid #f3f4f6;
+  flex-shrink: 0;
+}
+.comments-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: #111827;
+}
+.comments-count {
+  background: #f3f4f6;
+  border-radius: 20px;
+  padding: 1px 8px;
+  font-size: 12px;
+  margin-left: 8px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ── Comments list ── */
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comments-state {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+  padding: 20px 0;
+  margin: 0;
+}
+
+/* ── Error ── */
+.comments-error {
+  text-align: center;
+  color: #ef4444;
+  font-size: 13px;
+  padding: 4px 16px;
+  margin: 0;
+}
+
+/* ── Desktop ── */
+@media (min-width: 640px) {
+  .comments-card {
+    border-radius: 20px;
+    max-height: 70vh;
+    margin-bottom: 20px;
+  }
+}

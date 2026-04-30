@@ -1,0 +1,70 @@
+/* ═══════════════════════════════════════════════
+   ECShareSheet.css
+   ═══════════════════════════════════════════════ */
+
+.ec-share-box {
+  position: relative;
+  padding: 6px 20px 36px;
+}
+
+.ec-share-title {
+  margin: 4px 0 20px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: #111;
+}
+
+.ec-share-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  text-align: center;
+}
+
+.ec-share-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+  transition: background 0.16s;
+}
+.ec-share-item:hover {
+  background: #f9fafb;
+}
+.ec-share-item span {
+  font-size: 11px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.ec-share-icon {
+  font-size: 28px;
+  padding: 11px;
+  border-radius: 50%;
+  color: white;
+  display: block;
+}
+.ec-wa   { background: #25d366; }
+.ec-tg   { background: #229ed9; }
+.ec-fb   { background: #1877f2; }
+.ec-link { background: #6c63ff; }
+
+.ec-share-url {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #6b7280;
+  word-break: break-all;
+  text-align: center;
+}

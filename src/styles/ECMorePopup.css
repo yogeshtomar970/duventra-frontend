@@ -1,0 +1,32 @@
+/* ═══════════════════════════════════════════════
+   ECMorePopup.css
+   ═══════════════════════════════════════════════ */
+
+.ec-popup-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #111827;
+  transition: background 0.16s;
+}
+.ec-popup-item:hover {
+  background: #f9fafb;
+}
+.ec-popup-item svg {
+  font-size: 18px;
+  color: #6b7280;
+  flex-shrink: 0;
+  width: 20px;
+}
+.ec-popup-item--muted {
+  color: #9ca3af;
+  cursor: default;
+}
+.ec-popup-item--muted:hover {
+  background: transparent;
+}

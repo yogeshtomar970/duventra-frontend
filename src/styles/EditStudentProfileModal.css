@@ -1,0 +1,78 @@
+.esp-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+.esp-preview-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.esp-file-input {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.esp-text-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+  font-family: inherit;
+}
+
+.esp-select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  background: #fff;
+  font-family: inherit;
+}
+
+.esp-save-btn {
+  margin-top: 4px;
+  width: 100%;
+}
+
+.esp-cancel-btn {
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Shared modal styles (if not already in Profile.css) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 24px;
+  border-radius: 20px;
+  width: min(320px, 92vw);
+  text-align: center;
+  animation: popup 0.25s ease;
+}
+
+@keyframes popup {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}

@@ -1,0 +1,43 @@
+import React from "react";
+import EventCard from "./EventCard";
+import useEventFeed from "../hooks/useEventFeed.js";
+import FeedLoader from "./FeedLoader.jsx";
+import FeedState from "./FeedState.jsx";
+import "../styles/EventFeed.css";
+export default function EventFeed({ filters, scrollToPostId }) {
+  const {
+    filteredPosts,
+    loading,
+    error,
+    highlightId,
+    getProfileImg,
+    getPosterImg,
+  } = useEventFeed({ filters, scrollToPostId });
+
+  if (loading) return <FeedLoader />;
+  if (error)   return <FeedState message={error} isError />;
+  if (filteredPosts.length === 0) return <FeedState message="No posts found." />;
+
+  return (
+    <div className="event-feed">
+      {filteredPosts.map((post) => (
+        <EventCard
+          key={post._id}
+          postElementId={`post-${post._id}`}
+          highlighted={highlightId === String(post._id)}
+          profileimg={getProfileImg(post)}
+          societyname={post.societyName}
+          collegename={post.collegeName}
+          societyId={post.societyId}
+          type={post.societyType}
+          posterimg={getPosterImg(post)}
+          time={post.createdAt}
+          description={post.description}
+          formLink={post.formLink}
+          views={post.views}
+          postId={post._id}
+        />
+      ))}
+    </div>
+  );
+}

@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* ── Card Shell ── */
+.smc-card {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ffffff;
+  border: 1px solid #e8e0d6;
+  border-radius: 20px;
+  width: 148px;
+  flex-shrink: 0;
+  padding: 1.25rem 0.75rem;
+  text-align: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.smc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(181, 101, 29, 0.1);
+}
+
+/* ── Avatar ── */
+.smc-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #e8e0d6;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  background: #f9f5f0;
+}
+
+.smc-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Name ── */
+.smc-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+/* ── Divider ── */
+.smc-divider {
+  height: 1px;
+  background: #e8e0d6;
+  margin: 8px 0;
+}
+
+/* ── Info Lines ── */
+.smc-line {
+  font-size: 11px;
+  color: #8b6e5a;
+  margin: 3px 0;
+  line-height: 1.4;
+}
+
+/* ── Join Button ── */
+.smc-join {
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 20px;
+  background: #b5651d;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.15s;
+}
+
+.smc-join:hover {
+  background: #9a5518;
+}
+
+/* ── Joined State ── */
+.smc-join--joined {
+  background: #f9f5f0;
+  color: #8b6e5a;
+  border: 1px solid #e8e0d6;
+}
+
+.smc-join--joined:hover {
+  background: #f0e8df;
+  color: #6b4c2a;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .smc-card {
+    width: 130px;
+  }
+}

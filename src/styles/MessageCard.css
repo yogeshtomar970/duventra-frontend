@@ -1,0 +1,82 @@
+/* ══════════════════════════════════════════════
+   MessageCard.css  —  Global tokens & shared utils
+   Component-specific styles are in /styles/ folder
+   ══════════════════════════════════════════════ */
+
+/* ── CSS variables (tokens) ── */
+:root {
+  --msg-primary:       #5a0fc8;
+  --msg-primary-dark:  #4009a0;
+  --msg-primary-light: #f3eeff;
+  --msg-header-bg:     linear-gradient(135deg, #5a0fc8, #7c3aed);
+  --msg-sidebar-bg:    #fdfdff;
+  --msg-bg:            #f7f5ff;
+  --msg-bubble-in:     #ffffff;
+  --msg-bubble-out:    linear-gradient(135deg, #5a0fc8, #7c3aed);
+  --msg-border:        #ede9fe;
+  --msg-text-dark:     #1a1a2e;
+  --msg-text-muted:    #9ca3af;
+  --msg-online:        #22c55e;
+  --msg-radius:        18px;
+  --nav-height:        64px;
+}
+
+/* ── Page wrapper ── */
+.msg-page {
+  display: flex;
+  height: calc(100dvh - var(--nav-height));
+  
+  background: var(--msg-bg);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Shared: Avatar wrap + online dot ── */
+.msg-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.msg-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--msg-border);
+  display: block;
+}
+.msg-online-dot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--msg-online);
+  border: 2px solid white;
+}
+
+/* ── Shared: Spinner ── */
+.msg-spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ede9fe;
+  border-top-color: var(--msg-primary);
+  border-radius: 50%;
+  animation: msgSpin 0.7s linear infinite;
+}
+.msg-spinner-sm {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: msgSpin 0.7s linear infinite;
+}
+@keyframes msgSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Mobile: sidebar hidden when chat open ── */
+@media (max-width: 768px) {
+  .msg-sidebar-hidden { display: none !important; }
+}

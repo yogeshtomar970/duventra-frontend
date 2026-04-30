@@ -1,0 +1,194 @@
+/* ═══════════════════════════════════════════════
+   ECFooter.css
+   ═══════════════════════════════════════════════ */
+
+.ec-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.ec-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Action buttons (like / comment / share / info) ── */
+.ec-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 19px;
+  color: #9ca3af;
+  font-family: inherit;
+  text-decoration: none;
+  transition: background 0.15s, color 0.18s, transform 0.15s;
+}
+.ec-action-btn span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  min-width: 10px;
+}
+.ec-action-btn:hover {
+  background: #f9fafb;
+}
+.ec-action-btn:active {
+  transform: scale(0.88);
+}
+.ec-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Like ── */
+.like-action {
+  color: #d1d5db;
+}
+.like-action:hover {
+  color: #f43f5e;
+  background: #fff1f2;
+}
+.like-action.liked {
+  color: #f43f5e;
+}
+.like-action.liked:hover {
+  background: #fff1f2;
+}
+.like-action.liked svg {
+  animation: heartPop 0.3s ease;
+}
+@keyframes heartPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* ── Comment ── */
+.comment-action {
+  color: #60a5fa;
+}
+.comment-action:hover {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+/* ── Share ── */
+.share-action {
+  color: #34d399;
+}
+.share-action:hover {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+/* ── More button ── */
+.ec-more-btn {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.18s, transform 0.15s;
+}
+.ec-more-btn:hover {
+  background: #e5e7eb;
+}
+.ec-more-btn:active {
+  transform: scale(0.96);
+}
+
+/* ── Form link icon ── */
+.formlink {
+  color: blue;
+}
+
+/* ── Info display (description icon) ── */
+.ec-info-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 17px;
+  color: #f6024b;
+  padding: 7px 8px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: color 0.18s, background 0.18s;
+  user-select: none;
+}
+.ec-info-display:hover {
+  color: #d22f60;
+  background: #fff0f4;
+}
+
+/* ── Views display ── */
+.ec-views-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 17px;
+  color: #6366f1;
+  padding: 7px 8px;
+  cursor: default;
+  border-radius: 10px;
+  transition: color 0.18s, background 0.18s;
+  user-select: none;
+}
+.ec-views-display:hover {
+  color: #3d40ed;
+  background: #ede9fe;
+}
+.ec-views-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* ── Form link button (optional styled variant) ── */
+.ec-form-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #f6024b, #0e132f);
+  color: #fff !important;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  transition: opacity 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.ec-form-link-btn:hover {
+  opacity: 0.88;
+  transform: scale(1.04);
+}
+.ec-form-link-btn:active {
+  transform: scale(0.97);
+}
+.ec-form-link-text {
+  font-size: 12px;
+}
+
+/* ── Mobile small ── */
+@media (max-width: 380px) {
+  .ec-action-btn {
+    padding: 6px 8px;
+    font-size: 17px;
+  }
+}

@@ -10,7 +10,7 @@ export default function NavLogo() {
   return (
     <div className="logoimg">
       <img src={logo} alt="Duventra" />
-      <h2 className="logo">DU Eventra</h2>
+      <h2 className="logo">Duventra</h2>
     </div>
   );
 }

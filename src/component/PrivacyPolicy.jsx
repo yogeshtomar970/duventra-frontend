@@ -11,7 +11,7 @@ const sections = [
     content: [
       {
         subtitle: "Account Information",
-        text: "When you register on DU Eventra, we collect your name, college email address, role (student or society), and profile details you choose to provide such as your department, year, and profile photo.",
+        text: "When you register on Duventra, we collect your name, college email address, role (student or society), and profile details you choose to provide such as your department, year, and profile photo.",
       },
       {
         subtitle: "Usage Data",
@@ -132,7 +132,7 @@ const sections = [
     content: [
       {
         subtitle: "Questions or Concerns",
-        text: "If you have any questions about this Privacy Policy or how your data is handled, please reach out to us through the Help & Support page in the app or email us at privacy@dueventra.in",
+        text: "If you have any questions about this Privacy Policy or how your data is handled, please reach out to us through the Help & Support page in the app or email us at privacy@duventra.in",
       },
       {
         subtitle: "Updates to This Policy",
@@ -167,7 +167,7 @@ export default function PrivacyPolicy() {
         <div className="pp-hero-icon">🛡️</div>
         <p className="pp-hero-title">Your Privacy Matters</p>
         <p className="pp-hero-sub">
-          DU Eventra is built for the Delhi University community. We are
+          Duventra is built for the Delhi University community. We are
           committed to being transparent about how your data is used and to
           keeping it safe.
         </p>
@@ -211,7 +211,7 @@ export default function PrivacyPolicy() {
         <div className="pp-footer-note">
           <span>📌</span>
           <p>
-            By using DU Eventra, you agree to the collection and use of
+            By using Duventra, you agree to the collection and use of
             information as described in this policy.
           </p>
         </div>

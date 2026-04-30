@@ -21,7 +21,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
     <>
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
-          <div className="sidebar-brand">DU Eventra</div>
+          <div className="sidebar-brand">Duventra</div>
           {user && (
             <div className="sidebar-user">
               <div className="sidebar-user-avatar">

@@ -1,63 +1,101 @@
-.modern-member-card {
-  background: rgba(255, 255, 255, 0.5);
-  padding: 14px;
-  border-radius: 18px;
-  width: 155px;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+/* ── Card Shell ── */
+.nc-card {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #ffffff;
+  border: 1px solid #e8e0d6;
+  border-radius: 20px;
+  width: 148px;
   flex-shrink: 0;
+  padding: 1.25rem 0.75rem;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.25s;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 
-.modern-member-card:hover {
-  transform: translateY(-4px);
+.nc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(181, 101, 29, 0.1);
 }
 
-.modern-member-img {
+/* ── Avatar ── */
+.nc-avatar-wrap {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 3px solid #111;
+  border: 2px solid #e8e0d6;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  background: #f9f5f0;
+}
+
+.nc-avatar {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  margin: 0 auto 10px;
 }
 
-.modern-member-card h4 {
-  margin: 6px 0;
+/* ── Name ── */
+.nc-name {
   font-size: 13px;
   font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.3;
+  margin-bottom: 4px;
 }
 
-.member-info p {
-  font-size: 12px;
-  margin: 4px 0;
-  padding-bottom: 3px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-  text-align: center;
+/* ── Divider ── */
+.nc-divider {
+  height: 1px;
+  background: #e8e0d6;
+  margin: 8px 0;
 }
 
-.s-join-btn {
-  margin-top: 10px;
+/* ── Info Lines ── */
+.nc-line {
+  font-size: 11px;
+  color: #8b6e5a;
+  margin: 3px 0;
+  line-height: 1.4;
+}
+
+/* ── Action Button ── */
+.nc-btn {
   width: 100%;
-  padding: 6px 0;
+  padding: 7px 10px;
   border: none;
   border-radius: 20px;
-  background: #111;
+  background: #b5651d;
   color: #fff;
   font-size: 12px;
   font-weight: 600;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
-  transition: opacity 0.2s;
-  font-family: inherit;
+  margin-top: 10px;
+  transition: background 0.15s;
 }
 
-.s-join-btn:hover {
-  opacity: 0.85;
+.nc-btn:hover {
+  background: #9a5518;
 }
 
+/* ── Followed State ── */
+.nc-btn--followed {
+  background: #f9f5f0;
+  color: #8b6e5a;
+  border: 1px solid #e8e0d6;
+}
+
+.nc-btn--followed:hover {
+  background: #f0e8df;
+  color: #6b4c2a;
+}
+
+/* ── Responsive ── */
 @media (max-width: 480px) {
-  .modern-member-card {
-    width: 135px;
+  .nc-card {
+    width: 130px;
   }
 }

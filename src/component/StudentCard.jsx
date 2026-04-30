@@ -9,26 +9,26 @@ export default function StudentCard({
   onCardClick,
   onActionClick,
   actionLabel,
+  actionFollowedStyle,
 }) {
   return (
-    <div className="nc-card" onClick={onCardClick}>
-
-      <div className="nc-avatar-wrap">
-        <img
-          src={getImageUrl(item.profilePic, defaultAvatar)}
-          className="nc-avatar"
-          alt={item.name}
-        />
+    <div
+      className="modern-member-card"
+      onClick={onCardClick}
+    >
+      <img
+        src={getImageUrl(item.profilePic, defaultAvatar)}
+        className="modern-member-img"
+        alt={item.name}
+      />
+      <h4>{item.name}</h4>
+      <div className="member-info">
+        <p>{item.collegeName}</p>
+        <p>{item.course}</p>
       </div>
-
-      <p className="nc-name">{item.name}</p>
-
-      <div className="nc-divider" />
-      <p className="nc-line">{item.collegeName}</p>
-      <p className="nc-line">{item.course}</p>
-
       <button
-        className={`nc-btn ${isFollowing ? "nc-btn--followed" : ""}`}
+        className="s-join-btn"
+        style={isFollowing ? actionFollowedStyle : {}}
         onClick={(e) => {
           e.stopPropagation();
           onActionClick(item);

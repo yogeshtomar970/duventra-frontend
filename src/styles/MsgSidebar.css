@@ -226,7 +226,7 @@
   color: var(--msg-text-muted);
 }
 .msg-unread-badge {
-  background: var(--msg-primary);
+  background:#b5651d;
   color: white;
   font-size: 0.65rem;
   font-weight: 700;
@@ -243,7 +243,7 @@
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .msg-sidebar {
-    width: 100%;
+    width: 100vw;
     max-width: 100%;
     min-width: unset;
     height: 100%;

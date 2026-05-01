@@ -42,6 +42,7 @@ export default function ProfilePage() {
   const [myNews, setMyNews] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [members, setMembers] = useState([]);
+  const [studentMembers, setStudentMembers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [studentSuggestions, setStudentSuggestions] = useState([]);
@@ -50,6 +51,8 @@ export default function ProfilePage() {
   // ── Search state ──
   const [memberSearch, setMemberSearch] = useState("");
   const [memberSearchOpen, setMemberSearchOpen] = useState(false);
+  const [stuMemberSearch, setStuMemberSearch] = useState("");
+  const [stuMemberSearchOpen, setStuMemberSearchOpen] = useState(false);
   const [followingSearch, setFollowingSearch] = useState("");
   const [followingSearchOpen, setFollowingSearchOpen] = useState(false);
   const [suggSearch, setSuggSearch] = useState("");
@@ -101,7 +104,12 @@ export default function ProfilePage() {
       .catch(() => {});
     fetch(`${API_BASE_URL}/api/join/members/${user.societyId}`)
       .then((r) => r.json())
-      .then((data) => { if (data.success) setMembers(data.data); })
+      .then((data) => {
+        if (data.success) {
+          setMembers(data.data.filter(m => !m.memberType || m.memberType === "society"));
+          setStudentMembers(data.data.filter(m => m.memberType === "student"));
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -349,7 +357,7 @@ export default function ProfilePage() {
         {/* ── Members / Following / Suggestions ── */}
         <div className="gradient-card">
 
-          {/* Members */}
+          {/* Society Members */}
           <SearchHeader
             title={`Member (${filterByName(members, "societyName", memberSearch).length})`}
             searchOpen={memberSearchOpen}
@@ -369,6 +377,32 @@ export default function ProfilePage() {
                   isJoined={following.some((f) => f.societyId === item.societyId)}
                   onJoin={handleToggleMemberFollow}
                   onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)}
+                />
+              ))
+            )}
+          </div>
+
+          {/* Student Members */}
+          <SearchHeader
+            title={`Student Members (${filterByName(studentMembers, "name", stuMemberSearch).length})`}
+            searchOpen={stuMemberSearchOpen}
+            onToggleSearch={setStuMemberSearchOpen}
+            searchValue={stuMemberSearch}
+            onSearchChange={setStuMemberSearch}
+            onClear={() => setStuMemberSearch("")}
+          />
+          <div className="horizontal-scroll">
+            {filterByName(studentMembers, "name", stuMemberSearch).length === 0 ? (
+              <p>No student members found</p>
+            ) : (
+              filterByName(studentMembers, "name", stuMemberSearch).map((item, i) => (
+                <SocietyMemberCard
+                  key={i}
+                  item={item}
+                  isStudent={true}
+                  isJoined={false}
+                  onJoin={() => {}}
+                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
                 />
               ))
             )}

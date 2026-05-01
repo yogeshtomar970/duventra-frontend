@@ -1,5 +1,17 @@
 import React from "react";
+import API_BASE_URL from "../config/api.js";
 import "../styles/NetworkCard.css";
+
+const getImgUrl = (url, fallback) => {
+  if (!url) return fallback;
+  if (url.startsWith("http")) return url;
+  return `${API_BASE_URL}${url}`;
+};
+
+function getInitials(name) {
+  if (!name) return "?";
+  return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+}
 
 export default function SocietyCard({
   item,
@@ -11,28 +23,35 @@ export default function SocietyCard({
   actionLabel,
   actionFollowedStyle,
 }) {
+  const imgFn = getImageUrl || getImgUrl;
+  const hasImg = !!item?.profilePic;
+
   return (
-    <div
-      className="modern-member-card"
-      onClick={onCardClick}
-    >
-      <img
-        src={getImageUrl(item.profilePic, defaultSociety)}
-        className="modern-member-img"
-        alt={item.societyName}
-      />
-      <h4>{item.societyName}</h4>
-      <div className="member-info">
-        <p>{item.collegeName}</p>
-        <p>{item.societyType}</p>
+    <div className="nc-card" onClick={onCardClick}>
+
+      {/* Avatar */}
+      <div className="nc-av">
+        {hasImg ? (
+          <img src={imgFn(item.profilePic, defaultSociety)} alt={item.societyName} />
+        ) : (
+          getInitials(item.societyName)
+        )}
       </div>
+
+      {/* Name */}
+      <p className="nc-name">{item.societyName}</p>
+
+      {/* Divider */}
+      <div className="nc-divider" />
+
+      {/* Info */}
+      <p className="nc-line">{item.collegeName}</p>
+      <p className="nc-line">{item.societyType}</p>
+
+      {/* Join Button */}
       <button
-        className="s-join-btn"
-        style={isFollowing ? actionFollowedStyle : {}}
-        onClick={(e) => {
-          e.stopPropagation();
-          onActionClick(item);
-        }}
+        className={`nc-btn${isFollowing ? " nc-btn--joined" : ""}`}
+        onClick={(e) => { e.stopPropagation(); onActionClick(item); }}
       >
         {actionLabel}
       </button>

@@ -148,7 +148,7 @@
 }
 
 /* ── Card ── */
-.nc-card {
+.nc-cards {
   background: white;
   border-radius: 18px;
   overflow: hidden;
@@ -160,7 +160,7 @@
   animation: ncSlide 0.4s ease both;
   margin-bottom: 2px;
 }
-.nc-card:hover {
+.nc-cards:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.13);
 }
@@ -262,7 +262,7 @@
   display: block;
   transition: transform 0.5s;
 }
-.nc-card:hover .nc-card-img {
+.nc-cards:hover .nc-card-img {
   transform: scale(1.04);
 }
 

@@ -27,7 +27,7 @@ export default function NewsCard({ data, highlighted, onDelete }) {
     <>
       <article
         id={`news-${data._id}`}
-        className={`nc-card${highlighted ? " nc-card--highlight" : ""}`}
+        className={`nc-cards${highlighted ? " nc-card--highlight" : ""}`}
       >
         {/* Header */}
         <div className="nc-card-header">

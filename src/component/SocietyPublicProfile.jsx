@@ -14,27 +14,29 @@ const getImageUrl = (url, fallback) => {
   return `${API_BASE_URL}${url}`;
 };
 
-const DEFAULT_PROFILE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
-const DEFAULT_AVATAR  = "https://randomuser.me/api/portraits/men/1.jpg";
-const DEFAULT_SOCIETY = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
+const DEFAULT_PROFILE =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
+const DEFAULT_AVATAR = "https://randomuser.me/api/portraits/men/1.jpg";
+const DEFAULT_SOCIETY =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
 
 export default function SocietyPublicProfile() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const societyId = searchParams.get("id");
 
-  const [society, setSociety]         = useState(null);
-  const [loading, setLoading]         = useState(true);
+  const [society, setSociety] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
   const [joinLoading, setJoinLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab]     = useState("post");
+  const [activeTab, setActiveTab] = useState("post");
 
   const [posts, setPosts] = useState([]);
-  const [news, setNews]   = useState([]);
+  const [news, setNews] = useState([]);
 
-  const [members, setMembers]                   = useState([]);
-  const [following, setFollowing]               = useState([]);
+  const [members, setMembers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const [studentFollowing, setStudentFollowing] = useState([]);
 
   const getMyId = () => {
@@ -46,49 +48,62 @@ export default function SocietyPublicProfile() {
     if (!societyId) return;
 
     fetch(`${API_BASE_URL}/api/society/public/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setSociety(d.data); setLoading(false); })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setSociety(d.data);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
 
     const myId = getMyId();
     if (myId) {
       fetch(`${API_BASE_URL}/api/join/check/${myId}/${societyId}`)
-        .then(r => r.json())
-        .then(d => setIsFollowing(d.joined))
+        .then((r) => r.json())
+        .then((d) => setIsFollowing(d.joined))
         .catch(() => {});
     }
 
     fetch(`${API_BASE_URL}/api/join/members/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setMembers(d.data); })
-      .catch(() => {});
-
-    fetch(`${API_BASE_URL}/api/join/following/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setFollowing(d.data); })
-      .catch(() => {});
-
-    fetch(`${API_BASE_URL}/api/student/following/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setStudentFollowing(d.data); })
-      .catch(() => {});
-
-    fetch(`${API_BASE_URL}/api/post/all`)
-      .then(r => r.json())
-      .then(d => {
-        if (d.success) setPosts(d.posts.filter(p => p.societyId === societyId));
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setMembers(d.data);
       })
       .catch(() => {});
 
+    fetch(`${API_BASE_URL}/api/join/following/${societyId}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setFollowing(d.data);
+      })
+      .catch(() => {});
+
+    fetch(`${API_BASE_URL}/api/student/following/${societyId}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setStudentFollowing(d.data);
+      })
+      .catch(() => {});
+
+    fetch(`${API_BASE_URL}/api/post/all`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success)
+          setPosts(d.posts.filter((p) => p.societyId === societyId));
+      })
+      .catch(() => {});
   }, [societyId]);
 
   useEffect(() => {
     if (!society?._id) return;
     fetch(`${API_BASE_URL}/api/news/all`)
-      .then(r => r.json())
-      .then(d => {
+      .then((r) => r.json())
+      .then((d) => {
         if (Array.isArray(d)) {
-          setNews(d.filter(item => item.userId?.toString() === society._id?.toString()));
+          setNews(
+            d.filter(
+              (item) => item.userId?.toString() === society._id?.toString(),
+            ),
+          );
         }
       })
       .catch(() => {});
@@ -113,8 +128,18 @@ export default function SocietyPublicProfile() {
     setJoinLoading(false);
   };
 
-  if (loading) return <div style={{ textAlign: "center", padding: "80px 20px" }}><h3>Loading...</h3></div>;
-  if (!society) return <div style={{ textAlign: "center", padding: "80px 20px" }}><h3>Society not found</h3></div>;
+  if (loading)
+    return (
+      <div style={{ textAlign: "center", padding: "80px 20px" }}>
+        <h3>Loading...</h3>
+      </div>
+    );
+  if (!society)
+    return (
+      <div style={{ textAlign: "center", padding: "80px 20px" }}>
+        <h3>Society not found</h3>
+      </div>
+    );
 
   const myId = getMyId();
   const isOwnProfile = myId === society.societyId;
@@ -125,7 +150,6 @@ export default function SocietyPublicProfile() {
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <BottomNav />
       <div className="profile-container">
-
         {/* Profile Card */}
         <div className="profile-card">
           <div className="profile-left">
@@ -186,7 +210,12 @@ export default function SocietyPublicProfile() {
             <div className="member-grid">
               {society.committee.map((member, index) => (
                 <div className="member-box" key={index}>
-                  <img src={getImageUrl(member.studentId?.profilePic, DEFAULT_AVATAR)} />
+                  <img
+                    src={getImageUrl(
+                      member.studentId?.profilePic,
+                      DEFAULT_AVATAR,
+                    )}
+                  />
                   <p>{member.studentId?.name}</p>
                   <span>{member.post}</span>
                 </div>
@@ -197,58 +226,143 @@ export default function SocietyPublicProfile() {
 
         {/* Social Card */}
         <div className="student-social-card">
-
-          <h2 className="section-heading">Society Members ({members.length})</h2>
-          <div className="horizontal-scroll">
-            {members.length === 0 ? (
-              <p className="empty-text">No society members yet</p>
-            ) : (
-              members.filter(m => !m.memberType || m.memberType === "society").map((item, index) => (
-                <div className="modern-member-card" key={index} style={{ cursor: "pointer" }}
-                  onClick={() => navigate(`/society-profile?id=${item.societyId}`)}
-                >
-                  <img src={getImageUrl(item.profilePic, DEFAULT_SOCIETY)} className="modern-member-img" />
-                  <h4>{item.societyName}</h4>
-                  <div className="member-info"><p>{item.collegeName}</p><p>{item.societyType}</p></div>
+          {/* Society Members */}
+          {(() => {
+            const societyMembers = members.filter(
+              (m) => !m.memberType || m.memberType === "society",
+            );
+            return (
+              <>
+                <h2 className="section-heading">
+                  Society Members ({societyMembers.length})
+                </h2>
+                <div className="horizontal-scroll">
+                  {societyMembers.length === 0 ? (
+                    <p className="empty-text">No society members yet</p>
+                  ) : (
+                    societyMembers.map((item, index) => (
+                      <div
+                        className="modern-member-card"
+                        key={index}
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          navigate(`/society-profile?id=${item.societyId}`)
+                        }
+                      >
+                        <img
+                          src={getImageUrl(item.profilePic, DEFAULT_SOCIETY)}
+                          className="modern-member-img"
+                        />
+                        <h4>{item.societyName}</h4>
+                        <div className="member-info">
+                          <p>{item.collegeName}</p>
+                          <p>{item.societyType}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
-              ))
-            )}
-          </div>
+              </>
+            );
+          })()}
 
-          <h2 className="section-heading">Society Following ({following.length})</h2>
+          {/* Student Members */}
+          {(() => {
+            const studentMembers = members.filter(
+              (m) => m.memberType === "student",
+            );
+            return (
+              <>
+                <h2 className="section-heading">
+                  Student Members ({studentMembers.length})
+                </h2>
+                <div className="horizontal-scroll">
+                  {studentMembers.length === 0 ? (
+                    <p className="empty-text">No student members yet</p>
+                  ) : (
+                    studentMembers.map((item, index) => (
+                      <div
+                        className="modern-member-card"
+                        key={index}
+                        style={{ cursor: "pointer" }}
+                        onClick={() =>
+                          navigate(`/student-profile?id=${item.userId}`)
+                        }
+                      >
+                        <img
+                          src={getImageUrl(item.profilePic, DEFAULT_AVATAR)}
+                          className="modern-member-img"
+                        />
+                        <h4>{item.name}</h4>
+                        <div className="member-info">
+                          <p>{item.collegeName}</p>
+                          <p>{item.course}</p>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </>
+            );
+          })()}
+
+          <h2 className="section-heading">
+            Society Following ({following.length})
+          </h2>
           <div className="horizontal-scroll">
             {following.length === 0 ? (
               <p className="empty-text">No societies followed yet</p>
             ) : (
               following.map((item, index) => (
-                <div className="modern-member-card" key={index} style={{ cursor: "pointer" }}
-                  onClick={() => navigate(`/society-profile?id=${item.societyId}`)}
+                <div
+                  className="modern-member-card"
+                  key={index}
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    navigate(`/society-profile?id=${item.societyId}`)
+                  }
                 >
-                  <img src={getImageUrl(item.profilePic, DEFAULT_SOCIETY)} className="modern-member-img" />
+                  <img
+                    src={getImageUrl(item.profilePic, DEFAULT_SOCIETY)}
+                    className="modern-member-img"
+                  />
                   <h4>{item.societyName}</h4>
-                  <div className="member-info"><p>{item.collegeName}</p><p>{item.societyType}</p></div>
+                  <div className="member-info">
+                    <p>{item.collegeName}</p>
+                    <p>{item.societyType}</p>
+                  </div>
                 </div>
               ))
             )}
           </div>
 
-          <h2 className="section-heading">Student Following ({studentFollowing.length})</h2>
+          <h2 className="section-heading">
+            Student Following ({studentFollowing.length})
+          </h2>
           <div className="horizontal-scroll">
             {studentFollowing.length === 0 ? (
               <p className="empty-text">No students followed yet</p>
             ) : (
               studentFollowing.map((item, index) => (
-                <div className="modern-member-card" key={index} style={{ cursor: "pointer" }}
+                <div
+                  className="modern-member-card"
+                  key={index}
+                  style={{ cursor: "pointer" }}
                   onClick={() => navigate(`/student-profile?id=${item.userId}`)}
                 >
-                  <img src={getImageUrl(item.profilePic, DEFAULT_AVATAR)} className="modern-member-img" />
+                  <img
+                    src={getImageUrl(item.profilePic, DEFAULT_AVATAR)}
+                    className="modern-member-img"
+                  />
                   <h4>{item.name}</h4>
-                  <div className="member-info"><p>{item.collegeName}</p><p>{item.course}</p></div>
+                  <div className="member-info">
+                    <p>{item.collegeName}</p>
+                    <p>{item.course}</p>
+                  </div>
                 </div>
               ))
             )}
           </div>
-
         </div>
 
         {/* Posts & News — same as ProfilePage */}
@@ -276,7 +390,10 @@ export default function SocietyPublicProfile() {
                 posts.map((post) => (
                   <EventCard
                     key={post._id}
-                    profileimg={getImageUrl(society.profilePic, DEFAULT_PROFILE)}
+                    profileimg={getImageUrl(
+                      society.profilePic,
+                      DEFAULT_PROFILE,
+                    )}
                     societyname={society.societyName}
                     collegename={society.collegeName}
                     societyId={post.societyId}
@@ -313,7 +430,6 @@ export default function SocietyPublicProfile() {
             </div>
           )}
         </div>
-
       </div>
     </>
   );

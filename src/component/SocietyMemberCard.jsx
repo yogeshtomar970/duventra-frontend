@@ -10,16 +10,6 @@ const getImageUrl = (url, fallback) => {
 
 const DEFAULT_AVATAR = "https://randomuser.me/api/portraits/men/1.jpg";
 
-/**
- * Reusable card for Members, Following, Suggestions sections.
- *
- * Props:
- *  item        – society or student object
- *  isStudent   – boolean, true for student cards (uses item.name / item.course)
- *  isJoined    – boolean, whether already joined/followed
- *  onJoin      – callback for join/unjoin button click
- *  onCardClick – callback for card click (navigate)
- */
 export default function SocietyMemberCard({
   item,
   isStudent = false,
@@ -27,14 +17,13 @@ export default function SocietyMemberCard({
   onJoin,
   onCardClick,
 }) {
-  const name    = isStudent ? item.name        : item.societyName;
-  const line1   = isStudent ? item.collegeName : item.collegeName;
-  const line2   = isStudent ? item.course      : item.societyType;
-  const avatar  = isStudent ? item.profilePic  : item.profilePic;
+  const name = isStudent ? item.name : item.societyName;
+  const line1 = isStudent ? item.collegeName : item.collegeName;
+  const line2 = isStudent ? item.course : item.societyType;
+  const avatar = isStudent ? item.profilePic : item.profilePic;
 
   return (
     <div className="smc-card" onClick={onCardClick}>
-
       {/* Avatar */}
       <div className="smc-avatar-wrap">
         <img

@@ -79,6 +79,7 @@ export default function EventCard({
         collegename={collegename}
         type={type}
         time={time}
+        societyId={societyId}
         showJoinBtn={showJoinBtn}
         isJoined={isJoined}
         onJoin={handleJoin}

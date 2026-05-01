@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import { getTimeAgo } from "../hooks/getTimeAgo.js";
 import "../styles/ECHeader.css";
@@ -10,6 +10,7 @@ export default function ECHeader({
   collegename,
   type,
   time,
+  societyId,
   showJoinBtn,
   isJoined,
   onJoin,
@@ -19,14 +20,26 @@ export default function ECHeader({
   showDotMenu,
   setShowDotMenu,
 }) {
+  const navigate = useNavigate();
+
   const avatarFallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(
     societyname || "S"
   )}&background=0e132f&color=fff&size=60`;
 
+  const handleProfileClick = () => {
+    if (societyId) {
+      navigate(`/society-profile?id=${societyId}`);
+    }
+  };
+
   return (
     <div className="ec-header">
-      {/* Society info link */}
-      <Link to="/societyprofilelink" className="ec-profile-link">
+      {/* Society info — click karne par society profile khule */}
+      <div
+        className="ec-profile-link"
+        onClick={handleProfileClick}
+        style={{ cursor: societyId ? "pointer" : "default" }}
+      >
         <img
           src={profileimg || avatarFallback}
           alt={societyname}
@@ -41,7 +54,7 @@ export default function ECHeader({
           <span className="ec-college">{collegename}</span>
           <span className="ec-type">{type}</span>
         </div>
-      </Link>
+      </div>
 
       {/* Right side — time + dot menu + join */}
       <div className="ec-header-right">

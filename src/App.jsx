@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import HomePage from "./component/Homepage";
 import Notification from "./component/Notification";
@@ -21,45 +21,47 @@ import DescriptionCard from "./component/DescriptionCard";
 import HelpSupport from "./component/HelpSupport";
 import PrivacyPolicy from "./component/PrivacyPolicy";
 
+// ── Guard: login nahi hai toh /login par redirect ──
+function ProtectedRoute({ children }) {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+}
+
 function App() {
-  // ✅ FIX Bug 2: Wait for auth state to be read from localStorage before rendering
-  // This prevents the flicker where navbar/bottomnav briefly shows "logged out" state
   const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    // localStorage is synchronous — just a tick to let all components
-    // initialise from the same read before painting
     setAuthReady(true);
   }, []);
 
-  if (!authReady) return null; // Prevent flicker on first paint
+  if (!authReady) return null;
 
   return (
     <Router>
       <Routes>
+        {/* Public routes */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/notification" element={<Notification />} />
         <Route path="/news" element={<NewsPage />} />
-        <Route path="/meesage" element={<MessagePage />} />
-        <Route path="/societyprofile" element={<ProfilePage />} />
-        <Route
-          path="/societyprofilelink"
-          element={<SocietyProfilePageLink />}
-        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/studentsignup" element={<StudentSignup />} />
         <Route path="/societysignup" element={<SocietySignup />} />
-        <Route path="/studentprofile" element={<Studentprofile />} />
-       
-        <Route path="/upload" element={<UploadPost />} />
-        <Route path="/commentlink" element={<CommentsCard />} />
-        <Route path="/description" element={<DescriptionCard />} />
-        <Route path="/upload-news" element={<UploadNews />} />
         <Route path="/society-profile" element={<SocietyPublicProfile />} />
         <Route path="/student-profile" element={<StudentPublicProfile />} />
         <Route path="/help" element={<HelpSupport />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/description" element={<DescriptionCard />} />
+        <Route path="/commentlink" element={<CommentsCard />} />
+
+        {/* Protected routes — login zaroori */}
+        <Route path="/meesage" element={<ProtectedRoute><MessagePage /></ProtectedRoute>} />
+        <Route path="/societyprofile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/studentprofile" element={<ProtectedRoute><Studentprofile /></ProtectedRoute>} />
+        <Route path="/notification" element={<ProtectedRoute><Notification /></ProtectedRoute>} />
+        <Route path="/societyprofilelink" element={<ProtectedRoute><SocietyProfilePageLink /></ProtectedRoute>} />
+        <Route path="/upload" element={<ProtectedRoute><UploadPost /></ProtectedRoute>} />
+        <Route path="/upload-news" element={<ProtectedRoute><UploadNews /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

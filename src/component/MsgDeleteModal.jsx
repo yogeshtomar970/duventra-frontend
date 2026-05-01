@@ -5,11 +5,10 @@ export default function MsgDeleteModal({ selectedChat, onCancel, onConfirm }) {
   return (
     <div className="msg-modal-overlay" onClick={onCancel}>
       <div className="msg-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="msg-modal-icon">🗑️</div>
-        <h3>Chat Delete Karen?</h3>
+        
+        <h3>Chat Delete ?</h3>
         <p>
-          <strong>{selectedChat?.user.name}</strong> ke saath saari messages
-          hamesha ke liye delete ho jaayengi.
+          All messages will be deleted forever with<strong>{selectedChat?.user.name}</strong>
         </p>
         <div className="msg-modal-actions">
           <button className="msg-modal-cancel" onClick={onCancel}>Cancel</button>

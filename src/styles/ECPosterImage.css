@@ -11,7 +11,7 @@
 .ec-image img {
   width: 100%;
   display: block;
-  object-fit: cover;
+  
   max-height: 400px;
   min-height: 160px;
 }

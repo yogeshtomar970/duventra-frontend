@@ -432,31 +432,7 @@ export default function ProfilePage() {
               ))
             )}
           </div>
-             {/* Student Following */}
-          <SearchHeader
-            title={`Student Following (${filterByName(studentFollowing, "name", stuFollowSearch).length})`}
-            searchOpen={stuFollowSearchOpen}
-            onToggleSearch={setStuFollowSearchOpen}
-            searchValue={stuFollowSearch}
-            onSearchChange={setStuFollowSearch}
-            onClear={() => setStuFollowSearch("")}
-          />
-          <div className="horizontal-scroll">
-            {filterByName(studentFollowing, "name", stuFollowSearch).length === 0 ? (
-              <p>No students found</p>
-            ) : (
-              filterByName(studentFollowing, "name", stuFollowSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isStudent={true}
-                  isJoined={true}
-                  onJoin={handleToggleStudentFollowing}
-                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                />
-              ))
-            )}
-          </div>
+
           {/* Society Suggestions */}
           <SearchHeader
             title={`Society Suggestion (${filterByName(suggestions, "societyName", suggSearch).length})`}
@@ -508,7 +484,31 @@ export default function ProfilePage() {
             )}
           </div>
 
-         
+          {/* Student Following */}
+          <SearchHeader
+            title={`Student Following (${filterByName(studentFollowing, "name", stuFollowSearch).length})`}
+            searchOpen={stuFollowSearchOpen}
+            onToggleSearch={setStuFollowSearchOpen}
+            searchValue={stuFollowSearch}
+            onSearchChange={setStuFollowSearch}
+            onClear={() => setStuFollowSearch("")}
+          />
+          <div className="horizontal-scroll">
+            {filterByName(studentFollowing, "name", stuFollowSearch).length === 0 ? (
+              <p>No students found</p>
+            ) : (
+              filterByName(studentFollowing, "name", stuFollowSearch).map((item, i) => (
+                <SocietyMemberCard
+                  key={i}
+                  item={item}
+                  isStudent={true}
+                  isJoined={true}
+                  onJoin={handleToggleStudentFollowing}
+                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
+                />
+              ))
+            )}
+          </div>
 
         </div>
 

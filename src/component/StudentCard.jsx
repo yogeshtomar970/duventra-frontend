@@ -24,18 +24,19 @@ export default function StudentCard({
   actionFollowedStyle,
 }) {
   const imgFn = getImageUrl || getImgUrl;
-  const hasImg = !!item?.profilePic;
+  const fallback = defaultAvatar || "https://randomuser.me/api/portraits/men/1.jpg";
+  const imgSrc = imgFn(item?.profilePic, fallback);
 
   return (
     <div className="nc-card" onClick={onCardClick}>
 
       {/* Avatar */}
       <div className="nc-av">
-        {hasImg ? (
-          <img src={imgFn(item.profilePic, defaultAvatar)} alt={item.name} />
-        ) : (
-          getInitials(item.name)
-        )}
+        <img
+          src={imgSrc}
+          alt={item.name}
+          onError={(e) => { e.target.style.display = "none"; e.target.parentNode.innerText = getInitials(item.name); }}
+        />
       </div>
 
       {/* Name */}

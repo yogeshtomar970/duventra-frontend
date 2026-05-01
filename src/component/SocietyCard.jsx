@@ -24,18 +24,19 @@ export default function SocietyCard({
   actionFollowedStyle,
 }) {
   const imgFn = getImageUrl || getImgUrl;
-  const hasImg = !!item?.profilePic;
+  const fallback = defaultSociety || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
+  const imgSrc = imgFn(item?.profilePic, fallback);
 
   return (
     <div className="nc-card" onClick={onCardClick}>
 
       {/* Avatar */}
       <div className="nc-av">
-        {hasImg ? (
-          <img src={imgFn(item.profilePic, defaultSociety)} alt={item.societyName} />
-        ) : (
-          getInitials(item.societyName)
-        )}
+        <img
+          src={imgSrc}
+          alt={item.societyName}
+          onError={(e) => { e.target.style.display = "none"; e.target.parentNode.innerText = getInitials(item.societyName); }}
+        />
       </div>
 
       {/* Name */}

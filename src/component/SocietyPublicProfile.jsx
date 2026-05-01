@@ -25,29 +25,29 @@ const getImageUrl = (url, fallback) => {
 
 export default function SocietyPublicProfile() {
   const [searchParams] = useSearchParams();
-  const navigate       = useNavigate();
-  const societyId      = searchParams.get("id");
+  const navigate = useNavigate();
+  const societyId = searchParams.get("id");
 
-  const [society,          setSociety]          = useState(null);
-  const [loading,          setLoading]          = useState(true);
-  const [isFollowing,      setIsFollowing]      = useState(false);
-  const [joinLoading,      setJoinLoading]      = useState(false);
-  const [sidebarOpen,      setSidebarOpen]      = useState(false);
-  const [activeTab,        setActiveTab]        = useState("post");
+  const [society, setSociety] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [joinLoading, setJoinLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("post");
 
-  const [posts,            setPosts]            = useState([]);
-  const [news,             setNews]             = useState([]);
-  const [members,          setMembers]          = useState([]);
-  const [following,        setFollowing]        = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [news, setNews] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const [studentFollowing, setStudentFollowing] = useState([]);
 
-  const [socMemberSearch,     setSocMemberSearch]     = useState("");
+  const [socMemberSearch, setSocMemberSearch] = useState("");
   const [socMemberSearchOpen, setSocMemberSearchOpen] = useState(false);
-  const [stuMemberSearch,     setStuMemberSearch]     = useState("");
+  const [stuMemberSearch, setStuMemberSearch] = useState("");
   const [stuMemberSearchOpen, setStuMemberSearchOpen] = useState(false);
-  const [followingSearch,     setFollowingSearch]     = useState("");
+  const [followingSearch, setFollowingSearch] = useState("");
   const [followingSearchOpen, setFollowingSearchOpen] = useState(false);
-  const [stuFollowSearch,     setStuFollowSearch]     = useState("");
+  const [stuFollowSearch, setStuFollowSearch] = useState("");
   const [stuFollowSearchOpen, setStuFollowSearchOpen] = useState(false);
 
   const getMyId = () => {
@@ -59,46 +59,62 @@ export default function SocietyPublicProfile() {
     if (!societyId) return;
 
     fetch(`${API_BASE_URL}/api/society/public/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setSociety(d.data); setLoading(false); })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setSociety(d.data);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
 
     const myId = getMyId();
     if (myId) {
       fetch(`${API_BASE_URL}/api/join/check/${myId}/${societyId}`)
-        .then(r => r.json())
-        .then(d => setIsFollowing(d.joined))
+        .then((r) => r.json())
+        .then((d) => setIsFollowing(d.joined))
         .catch(() => {});
     }
 
     fetch(`${API_BASE_URL}/api/join/members/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setMembers(d.data); })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setMembers(d.data);
+      })
       .catch(() => {});
 
     fetch(`${API_BASE_URL}/api/join/following/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setFollowing(d.data); })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setFollowing(d.data);
+      })
       .catch(() => {});
 
     fetch(`${API_BASE_URL}/api/student/following/${societyId}`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setStudentFollowing(d.data); })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success) setStudentFollowing(d.data);
+      })
       .catch(() => {});
 
     fetch(`${API_BASE_URL}/api/post/all`)
-      .then(r => r.json())
-      .then(d => { if (d.success) setPosts(d.posts.filter(p => p.societyId === societyId)); })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success)
+          setPosts(d.posts.filter((p) => p.societyId === societyId));
+      })
       .catch(() => {});
   }, [societyId]);
 
   useEffect(() => {
     if (!society?._id) return;
     fetch(`${API_BASE_URL}/api/news/all`)
-      .then(r => r.json())
-      .then(d => {
+      .then((r) => r.json())
+      .then((d) => {
         if (Array.isArray(d))
-          setNews(d.filter(item => item.userId?.toString() === society._id?.toString()));
+          setNews(
+            d.filter(
+              (item) => item.userId?.toString() === society._id?.toString(),
+            ),
+          );
       })
       .catch(() => {});
   }, [society]);
@@ -125,16 +141,28 @@ export default function SocietyPublicProfile() {
   };
 
   const filterBy = (list, key, q) =>
-    list.filter(i => i[key]?.toLowerCase().includes(q.toLowerCase()));
+    list.filter((i) => i[key]?.toLowerCase().includes(q.toLowerCase()));
 
-  if (loading) return <div className="pp-loading"><h3>Loading...</h3></div>;
-  if (!society) return <div className="pp-loading"><h3>Society not found</h3></div>;
+  if (loading)
+    return (
+      <div className="pp-loading">
+        <h3>Loading...</h3>
+      </div>
+    );
+  if (!society)
+    return (
+      <div className="pp-loading">
+        <h3>Society not found</h3>
+      </div>
+    );
 
-  const myId         = getMyId();
+  const myId = getMyId();
   const isOwnProfile = myId === society.societyId;
 
-  const societyMembers = members.filter(m => !m.memberType || m.memberType === "society");
-  const studentMembers = members.filter(m => m.memberType === "student");
+  const societyMembers = members.filter(
+    (m) => !m.memberType || m.memberType === "society",
+  );
+  const studentMembers = members.filter((m) => m.memberType === "student");
 
   return (
     <>
@@ -142,7 +170,6 @@ export default function SocietyPublicProfile() {
       <BottomNav />
 
       <div className="profile-container">
-
         {/* ── Profile Card — same component as ProfilePage ── */}
         <div style={{ position: "relative" }}>
           {/* ProfileCard renders with pc4-* classes, edit button hidden (onEditClick=null) */}
@@ -161,12 +188,12 @@ export default function SocietyPublicProfile() {
                 width: "auto",
                 padding: "10px 22px",
                 background: isFollowing ? "#f0e8df" : "#b5651d",
-                color:      isFollowing ? "#8b5e3c" : "#fff",
-                border:     isFollowing ? "1px solid #d6c5b0" : "none",
-                opacity:    joinLoading ? 0.6 : 1,
+                color: isFollowing ? "#8b5e3c" : "#fff",
+                border: isFollowing ? "1px solid #d6c5b0" : "none",
+                opacity: joinLoading ? 0.6 : 1,
               }}
             >
-              {isFollowing ? "Following ✓" : "Join Us"}
+              {isFollowing ? "Joined ✓" : "Join Us"}
             </button>
           )}
         </div>
@@ -177,89 +204,144 @@ export default function SocietyPublicProfile() {
         )}
 
         {/* ── Social Sections — same card style as ProfilePage ── */}
-        <div className="pc4-card" style={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "1.5rem",
-          gap: "1rem",
-          gridTemplateColumns: "unset",
-          marginBottom: 4,
-        }}>
-
+        <div
+          className="pc4-card"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "1.5rem",
+            gap: "1rem",
+            gridTemplateColumns: "unset",
+            marginBottom: 4,
+          }}
+        >
           {/* Society Members */}
           <SearchHeader
             title={`Society Members (${filterBy(societyMembers, "societyName", socMemberSearch).length})`}
-            searchOpen={socMemberSearchOpen} onToggleSearch={setSocMemberSearchOpen}
-            searchValue={socMemberSearch} onSearchChange={setSocMemberSearch}
+            searchOpen={socMemberSearchOpen}
+            onToggleSearch={setSocMemberSearchOpen}
+            searchValue={socMemberSearch}
+            onSearchChange={setSocMemberSearch}
             onClear={() => setSocMemberSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterBy(societyMembers, "societyName", socMemberSearch).length === 0
-              ? <p style={{ color: "#999", fontSize: 13, margin: 0 }}>No society members yet</p>
-              : filterBy(societyMembers, "societyName", socMemberSearch).map((item, i) => (
-                <SocietyMemberCard key={i} item={item}
-                  isJoined={false} onJoin={() => {}}
-                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)}
-                />
-              ))
-            }
+            {filterBy(societyMembers, "societyName", socMemberSearch).length ===
+            0 ? (
+              <p style={{ color: "#999", fontSize: 13, margin: 0 }}>
+                No society members yet
+              </p>
+            ) : (
+              filterBy(societyMembers, "societyName", socMemberSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isJoined={false}
+                    onJoin={() => {}}
+                    onCardClick={() =>
+                      navigate(`/society-profile?id=${item.societyId}`)
+                    }
+                  />
+                ),
+              )
+            )}
           </div>
 
           {/* Student Members */}
           <SearchHeader
             title={`Student Members (${filterBy(studentMembers, "name", stuMemberSearch).length})`}
-            searchOpen={stuMemberSearchOpen} onToggleSearch={setStuMemberSearchOpen}
-            searchValue={stuMemberSearch} onSearchChange={setStuMemberSearch}
+            searchOpen={stuMemberSearchOpen}
+            onToggleSearch={setStuMemberSearchOpen}
+            searchValue={stuMemberSearch}
+            onSearchChange={setStuMemberSearch}
             onClear={() => setStuMemberSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterBy(studentMembers, "name", stuMemberSearch).length === 0
-              ? <p style={{ color: "#999", fontSize: 13, margin: 0 }}>No student members yet</p>
-              : filterBy(studentMembers, "name", stuMemberSearch).map((item, i) => (
-                <SocietyMemberCard key={i} item={item} isStudent={true}
-                  isJoined={false} onJoin={() => {}}
-                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                />
-              ))
-            }
+            {filterBy(studentMembers, "name", stuMemberSearch).length === 0 ? (
+              <p style={{ color: "#999", fontSize: 13, margin: 0 }}>
+                No student members yet
+              </p>
+            ) : (
+              filterBy(studentMembers, "name", stuMemberSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isStudent={true}
+                    isJoined={false}
+                    onJoin={() => {}}
+                    onCardClick={() =>
+                      navigate(`/student-profile?id=${item.userId}`)
+                    }
+                  />
+                ),
+              )
+            )}
           </div>
 
           {/* Society Following */}
           <SearchHeader
             title={`Society Following (${filterBy(following, "societyName", followingSearch).length})`}
-            searchOpen={followingSearchOpen} onToggleSearch={setFollowingSearchOpen}
-            searchValue={followingSearch} onSearchChange={setFollowingSearch}
+            searchOpen={followingSearchOpen}
+            onToggleSearch={setFollowingSearchOpen}
+            searchValue={followingSearch}
+            onSearchChange={setFollowingSearch}
             onClear={() => setFollowingSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterBy(following, "societyName", followingSearch).length === 0
-              ? <p style={{ color: "#999", fontSize: 13, margin: 0 }}>No societies followed yet</p>
-              : filterBy(following, "societyName", followingSearch).map((item, i) => (
-                <SocietyMemberCard key={i} item={item}
-                  isJoined={false} onJoin={() => {}}
-                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)}
-                />
-              ))
-            }
+            {filterBy(following, "societyName", followingSearch).length ===
+            0 ? (
+              <p style={{ color: "#999", fontSize: 13, margin: 0 }}>
+                No societies followed yet
+              </p>
+            ) : (
+              filterBy(following, "societyName", followingSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isJoined={false}
+                    onJoin={() => {}}
+                    onCardClick={() =>
+                      navigate(`/society-profile?id=${item.societyId}`)
+                    }
+                  />
+                ),
+              )
+            )}
           </div>
 
           {/* Student Following */}
           <SearchHeader
             title={`Student Following (${filterBy(studentFollowing, "name", stuFollowSearch).length})`}
-            searchOpen={stuFollowSearchOpen} onToggleSearch={setStuFollowSearchOpen}
-            searchValue={stuFollowSearch} onSearchChange={setStuFollowSearch}
+            searchOpen={stuFollowSearchOpen}
+            onToggleSearch={setStuFollowSearchOpen}
+            searchValue={stuFollowSearch}
+            onSearchChange={setStuFollowSearch}
             onClear={() => setStuFollowSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterBy(studentFollowing, "name", stuFollowSearch).length === 0
-              ? <p style={{ color: "#999", fontSize: 13, margin: 0 }}>No students followed yet</p>
-              : filterBy(studentFollowing, "name", stuFollowSearch).map((item, i) => (
-                <SocietyMemberCard key={i} item={item} isStudent={true}
-                  isJoined={false} onJoin={() => {}}
-                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                />
-              ))
-            }
+            {filterBy(studentFollowing, "name", stuFollowSearch).length ===
+            0 ? (
+              <p style={{ color: "#999", fontSize: 13, margin: 0 }}>
+                No students followed yet
+              </p>
+            ) : (
+              filterBy(studentFollowing, "name", stuFollowSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isStudent={true}
+                    isJoined={false}
+                    onJoin={() => {}}
+                    onCardClick={() =>
+                      navigate(`/student-profile?id=${item.userId}`)
+                    }
+                  />
+                ),
+              )
+            )}
           </div>
         </div>
 
@@ -275,7 +357,6 @@ export default function SocietyPublicProfile() {
           onNewsUpdated={null}
           onNewsDeleted={null}
         />
-
       </div>
     </>
   );

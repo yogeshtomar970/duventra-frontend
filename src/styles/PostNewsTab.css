@@ -60,7 +60,7 @@
 
 /* ── Body ── */
 .pnt-body {
-  padding: 4px;
+  padding: 6px;
 }
 
 /* ── Empty State ── */
@@ -70,9 +70,13 @@
   font-size: 13px;
   font-style: italic;
   padding: 2rem 0;
+  grid-column: 1 / -1;
 }
 
-/* ── Post Grid ── */
+/* ══════════════════════════════
+   POST GRID
+   (EventCard grid — same columns)
+══════════════════════════════ */
 .post-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -87,7 +91,6 @@
 @media (min-width: 600px) {
   .post-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
   }
 }
 
@@ -95,41 +98,28 @@
   .post-grid {
     grid-template-columns: repeat(3, minmax(0, 440px));
     justify-content: center;
-    gap: 6px;
   }
 }
 
-/* ── News Section ── */
+/* ══════════════════════════════
+   NEWS SECTION
+   NewsCard grid — same as News page (.news-feed)
+══════════════════════════════ */
 .news-section {
   display: grid;
   grid-template-columns: 1fr;
   gap: 6px;
-  justify-items: center;
 }
 
+/* Cards fill their column — no artificial max-width */
 .news-section .nc-card {
   width: 100%;
-  max-width: 420px;
   margin-bottom: 0 !important;
-}
-
-.news-section .nc-card-img-wrap {
-  max-height: 200px;
-}
-
-.news-section .nc-card-desc {
-  -webkit-line-clamp: 3;
-  font-size: 13px;
 }
 
 @media (min-width: 600px) {
   .news-section {
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
-
-  .news-section .nc-card {
-    max-width: 100%;
   }
 }
 
@@ -137,6 +127,5 @@
   .news-section {
     grid-template-columns: repeat(3, minmax(0, 440px));
     justify-content: center;
-    gap: 6px;
   }
 }

@@ -1,12 +1,19 @@
 import API_BASE_URL from "../config/api.js";
 import React, { useEffect, useState } from "react";
-import "../ProfilePage.css";
-import "../Profile.css";
-import BottomNav from "./BottomNav";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { FiHome } from "react-icons/fi";
+
 import Navbar from "./Navbar";
+import BottomNav from "./BottomNav";
+import CommitteeCard from "./CommitteeCard";
+import SocietyMemberCard from "./SocietyMemberCard";
+import SearchHeader from "./SearchHeader";
 import EventCard from "./EventCard";
 import NewsCardWithActions from "./NewsCardWithActions";
-import { useSearchParams, useNavigate } from "react-router-dom";
+
+import "../styles/ProfileCard.css";
+import "../styles/CommitteeCard.css";
+import "../styles/SocietyMemberCard.css";
 
 const getImageUrl = (url, fallback) => {
   if (!url) return fallback;
@@ -14,30 +21,39 @@ const getImageUrl = (url, fallback) => {
   return `${API_BASE_URL}${url}`;
 };
 
-const DEFAULT_PROFILE =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
-const DEFAULT_AVATAR = "https://randomuser.me/api/portraits/men/1.jpg";
-const DEFAULT_SOCIETY =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
+function getInitials(name) {
+  if (!name) return "?";
+  return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+}
+
+const DEFAULT_SOCIETY = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf1fiSQO7JfDw0uv1Ae_Ye-Bo9nhGNg27dwg&s";
 
 export default function SocietyPublicProfile() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const societyId = searchParams.get("id");
 
-  const [society, setSociety] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [society, setSociety]         = useState(null);
+  const [loading, setLoading]         = useState(true);
   const [isFollowing, setIsFollowing] = useState(false);
   const [joinLoading, setJoinLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("post");
+  const [activeTab, setActiveTab]     = useState("post");
 
-  const [posts, setPosts] = useState([]);
-  const [news, setNews] = useState([]);
-
-  const [members, setMembers] = useState([]);
-  const [following, setFollowing] = useState([]);
+  const [posts, setPosts]                       = useState([]);
+  const [news, setNews]                         = useState([]);
+  const [members, setMembers]                   = useState([]);
+  const [following, setFollowing]               = useState([]);
   const [studentFollowing, setStudentFollowing] = useState([]);
+
+  const [socMemberSearch, setSocMemberSearch]         = useState("");
+  const [socMemberSearchOpen, setSocMemberSearchOpen] = useState(false);
+  const [stuMemberSearch, setStuMemberSearch]         = useState("");
+  const [stuMemberSearchOpen, setStuMemberSearchOpen] = useState(false);
+  const [followingSearch, setFollowingSearch]         = useState("");
+  const [followingSearchOpen, setFollowingSearchOpen] = useState(false);
+  const [stuFollowSearch, setStuFollowSearch]         = useState("");
+  const [stuFollowSearchOpen, setStuFollowSearchOpen] = useState(false);
 
   const getMyId = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -48,63 +64,46 @@ export default function SocietyPublicProfile() {
     if (!societyId) return;
 
     fetch(`${API_BASE_URL}/api/society/public/${societyId}`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success) setSociety(d.data);
-        setLoading(false);
-      })
+      .then(r => r.json())
+      .then(d => { if (d.success) setSociety(d.data); setLoading(false); })
       .catch(() => setLoading(false));
 
     const myId = getMyId();
     if (myId) {
       fetch(`${API_BASE_URL}/api/join/check/${myId}/${societyId}`)
-        .then((r) => r.json())
-        .then((d) => setIsFollowing(d.joined))
+        .then(r => r.json())
+        .then(d => setIsFollowing(d.joined))
         .catch(() => {});
     }
 
     fetch(`${API_BASE_URL}/api/join/members/${societyId}`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success) setMembers(d.data);
-      })
+      .then(r => r.json())
+      .then(d => { if (d.success) setMembers(d.data); })
       .catch(() => {});
 
     fetch(`${API_BASE_URL}/api/join/following/${societyId}`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success) setFollowing(d.data);
-      })
+      .then(r => r.json())
+      .then(d => { if (d.success) setFollowing(d.data); })
       .catch(() => {});
 
     fetch(`${API_BASE_URL}/api/student/following/${societyId}`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success) setStudentFollowing(d.data);
-      })
+      .then(r => r.json())
+      .then(d => { if (d.success) setStudentFollowing(d.data); })
       .catch(() => {});
 
     fetch(`${API_BASE_URL}/api/post/all`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.success)
-          setPosts(d.posts.filter((p) => p.societyId === societyId));
-      })
+      .then(r => r.json())
+      .then(d => { if (d.success) setPosts(d.posts.filter(p => p.societyId === societyId)); })
       .catch(() => {});
   }, [societyId]);
 
   useEffect(() => {
     if (!society?._id) return;
     fetch(`${API_BASE_URL}/api/news/all`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (Array.isArray(d)) {
-          setNews(
-            d.filter(
-              (item) => item.userId?.toString() === society._id?.toString(),
-            ),
-          );
-        }
+      .then(r => r.json())
+      .then(d => {
+        if (Array.isArray(d))
+          setNews(d.filter(item => item.userId?.toString() === society._id?.toString()));
       })
       .catch(() => {});
   }, [society]);
@@ -116,56 +115,59 @@ export default function SocietyPublicProfile() {
     setJoinLoading(true);
     try {
       const endpoint = isFollowing ? "/api/join/unjoin" : "/api/join/join";
+      const user = JSON.parse(localStorage.getItem("user"));
+      const memberType = user?.societyId ? "society" : "student";
       const res = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ myId, targetId: societyId }),
+        body: JSON.stringify({ myId, targetId: societyId, memberType }),
       });
       const data = await res.json();
       if (isFollowing) setIsFollowing(false);
       else if (data.joined) setIsFollowing(true);
-    } catch (error) {}
+    } catch (e) {}
     setJoinLoading(false);
   };
 
-  if (loading)
-    return (
-      <div style={{ textAlign: "center", padding: "80px 20px" }}>
-        <h3>Loading...</h3>
-      </div>
-    );
-  if (!society)
-    return (
-      <div style={{ textAlign: "center", padding: "80px 20px" }}>
-        <h3>Society not found</h3>
-      </div>
-    );
+  const filterBy = (list, key, q) =>
+    list.filter(i => i[key]?.toLowerCase().includes(q.toLowerCase()));
 
-  const myId = getMyId();
+  if (loading) return <div style={{ textAlign: "center", padding: "80px 20px" }}><h3>Loading...</h3></div>;
+  if (!society) return <div style={{ textAlign: "center", padding: "80px 20px" }}><h3>Society not found</h3></div>;
+
+  const myId       = getMyId();
   const isOwnProfile = myId === society.societyId;
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user       = JSON.parse(localStorage.getItem("user"));
+  const hasImage   = !!society.profilePic;
+  const imgSrc     = getImageUrl(society.profilePic, null);
+
+  const societyMembers = members.filter(m => !m.memberType || m.memberType === "society");
+  const studentMembers = members.filter(m => m.memberType === "student");
 
   return (
     <>
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <BottomNav />
-      <div className="profile-container">
-        {/* Profile Card */}
-        <div className="profile-card">
-          <div className="profile-left">
-            <img
-              src={getImageUrl(society.profilePic, DEFAULT_PROFILE)}
-              alt="profile"
-              className="profile-card-image"
-            />
+
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "72px 16px 100px" }}>
+
+        {/* ── Profile Card ── */}
+        <div className="pc4-card" style={{ marginBottom: 16 }}>
+          <div className="pc4-left">
+            <div className="pc4-avatar-frame">
+              {hasImage
+                ? <img src={imgSrc} alt="profile" className="pc4-avatar-img" />
+                : <span className="pc4-avatar-initials">{getInitials(society.societyName)}</span>
+              }
+            </div>
             {!isOwnProfile && (
               <button
-                className="edit-pic-btn"
+                className="pc4-edit-btn"
                 style={{
-                  background: isFollowing ? "#e0e0e0" : "#111",
-                  color: isFollowing ? "#555" : "#fff",
-                  marginTop: "10px",
-                  opacity: joinLoading ? 0.6 : 1,
+                  background: isFollowing ? "#f0e8df" : "#b5651d",
+                  color:      isFollowing ? "#8b5e3c" : "#fff",
+                  border:     isFollowing ? "1px solid #d6c5b0" : "none",
+                  opacity:    joinLoading ? 0.6 : 1,
                 }}
                 onClick={handleToggleJoin}
                 disabled={joinLoading}
@@ -175,261 +177,145 @@ export default function SocietyPublicProfile() {
             )}
           </div>
 
-          <div className="profile-right">
-            <div className="info-block">
-              <label>Society Name</label>
-              <h2>{society.societyName}</h2>
+          <div className="pc4-right">
+            <div className="pc4-r-header">
+              <p className="pc4-r-name">{society.societyName}</p>
+              <p className="pc4-r-college"><FiHome size={13} />{society.collegeName}</p>
             </div>
-            <div className="info-block">
-              <label>Society Type</label>
-              <h3>{society.societyType}</h3>
-            </div>
-            <div className="info-block">
-              <label>College Name</label>
-              <h3>{society.collegeName}</h3>
-            </div>
-            {society.coordinatorName && (
-              <div className="info-block">
-                <label>Coordinator Name</label>
-                <h3>{society.coordinatorName}</h3>
+            <div className="pc4-divider" />
+            <div className="pc4-fields">
+              <div className="pc4-field">
+                <span className="pc4-label">Society Type</span>
+                <span className="pc4-val">{society.societyType || "—"}</span>
               </div>
-            )}
+              <div className="pc4-field">
+                <span className="pc4-label">Coordinator</span>
+                <span className="pc4-val">{society.coordinatorName || "Not specified"}</span>
+              </div>
+            </div>
             {society.bio && (
-              <div className="info-block">
-                <label>Bio</label>
-                <h3>{society.bio}</h3>
+              <div className="pc4-bio">
+                <p className="pc4-bio-heading">Bio</p>
+                <p className="pc4-bio-text">{society.bio}</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Committee Card */}
+        {/* ── Committee (read-only) ── */}
         {society.committee?.length > 0 && (
-          <div className="gradient-card">
-            <h3>Society Committee</h3>
-            <div className="member-grid">
-              {society.committee.map((member, index) => (
-                <div className="member-box" key={index}>
-                  <img
-                    src={getImageUrl(
-                      member.studentId?.profilePic,
-                      DEFAULT_AVATAR,
-                    )}
-                  />
-                  <p>{member.studentId?.name}</p>
-                  <span>{member.post}</span>
-                </div>
-              ))}
-            </div>
+          <div style={{ marginBottom: 16 }}>
+            <CommitteeCard committee={society.committee} onEditClick={null} />
           </div>
         )}
 
-        {/* Social Card */}
-        <div className="student-social-card">
+        {/* ── Social Sections ── */}
+        <div className="cc-card" style={{ display: "flex", flexDirection: "column", gap: "1.25rem", padding: "1.5rem", marginBottom: 16 }}>
+
           {/* Society Members */}
-          {(() => {
-            const societyMembers = members.filter(
-              (m) => !m.memberType || m.memberType === "society",
-            );
-            return (
-              <>
-                <h2 className="section-heading">
-                  Society Members ({societyMembers.length})
-                </h2>
-                <div className="horizontal-scroll">
-                  {societyMembers.length === 0 ? (
-                    <p className="empty-text">No society members yet</p>
-                  ) : (
-                    societyMembers.map((item, index) => (
-                      <div
-                        className="modern-member-card"
-                        key={index}
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          navigate(`/society-profile?id=${item.societyId}`)
-                        }
-                      >
-                        <img
-                          src={getImageUrl(item.profilePic, DEFAULT_SOCIETY)}
-                          className="modern-member-img"
-                        />
-                        <h4>{item.societyName}</h4>
-                        <div className="member-info">
-                          <p>{item.collegeName}</p>
-                          <p>{item.societyType}</p>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </>
-            );
-          })()}
+          <SearchHeader
+            title={`Society Members (${filterBy(societyMembers, "societyName", socMemberSearch).length})`}
+            searchOpen={socMemberSearchOpen} onToggleSearch={setSocMemberSearchOpen}
+            searchValue={socMemberSearch} onSearchChange={setSocMemberSearch} onClear={() => setSocMemberSearch("")}
+          />
+          <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
+            {filterBy(societyMembers, "societyName", socMemberSearch).length === 0
+              ? <p style={{ color: "#999", fontSize: 13 }}>No society members yet</p>
+              : filterBy(societyMembers, "societyName", socMemberSearch).map((item, i) => (
+                <SocietyMemberCard key={i} item={item} isJoined={false} onJoin={() => {}}
+                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)} />
+              ))}
+          </div>
 
           {/* Student Members */}
-          {(() => {
-            const studentMembers = members.filter(
-              (m) => m.memberType === "student",
-            );
-            return (
-              <>
-                <h2 className="section-heading">
-                  Student Members ({studentMembers.length})
-                </h2>
-                <div className="horizontal-scroll">
-                  {studentMembers.length === 0 ? (
-                    <p className="empty-text">No student members yet</p>
-                  ) : (
-                    studentMembers.map((item, index) => (
-                      <div
-                        className="modern-member-card"
-                        key={index}
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          navigate(`/student-profile?id=${item.userId}`)
-                        }
-                      >
-                        <img
-                          src={getImageUrl(item.profilePic, DEFAULT_AVATAR)}
-                          className="modern-member-img"
-                        />
-                        <h4>{item.name}</h4>
-                        <div className="member-info">
-                          <p>{item.collegeName}</p>
-                          <p>{item.course}</p>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </>
-            );
-          })()}
-
-          <h2 className="section-heading">
-            Society Following ({following.length})
-          </h2>
-          <div className="horizontal-scroll">
-            {following.length === 0 ? (
-              <p className="empty-text">No societies followed yet</p>
-            ) : (
-              following.map((item, index) => (
-                <div
-                  className="modern-member-card"
-                  key={index}
-                  style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    navigate(`/society-profile?id=${item.societyId}`)
-                  }
-                >
-                  <img
-                    src={getImageUrl(item.profilePic, DEFAULT_SOCIETY)}
-                    className="modern-member-img"
-                  />
-                  <h4>{item.societyName}</h4>
-                  <div className="member-info">
-                    <p>{item.collegeName}</p>
-                    <p>{item.societyType}</p>
-                  </div>
-                </div>
-              ))
-            )}
+          <SearchHeader
+            title={`Student Members (${filterBy(studentMembers, "name", stuMemberSearch).length})`}
+            searchOpen={stuMemberSearchOpen} onToggleSearch={setStuMemberSearchOpen}
+            searchValue={stuMemberSearch} onSearchChange={setStuMemberSearch} onClear={() => setStuMemberSearch("")}
+          />
+          <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
+            {filterBy(studentMembers, "name", stuMemberSearch).length === 0
+              ? <p style={{ color: "#999", fontSize: 13 }}>No student members yet</p>
+              : filterBy(studentMembers, "name", stuMemberSearch).map((item, i) => (
+                <SocietyMemberCard key={i} item={item} isStudent={true} isJoined={false} onJoin={() => {}}
+                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)} />
+              ))}
           </div>
 
-          <h2 className="section-heading">
-            Student Following ({studentFollowing.length})
-          </h2>
-          <div className="horizontal-scroll">
-            {studentFollowing.length === 0 ? (
-              <p className="empty-text">No students followed yet</p>
-            ) : (
-              studentFollowing.map((item, index) => (
-                <div
-                  className="modern-member-card"
-                  key={index}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                >
-                  <img
-                    src={getImageUrl(item.profilePic, DEFAULT_AVATAR)}
-                    className="modern-member-img"
-                  />
-                  <h4>{item.name}</h4>
-                  <div className="member-info">
-                    <p>{item.collegeName}</p>
-                    <p>{item.course}</p>
+          {/* Society Following */}
+          <SearchHeader
+            title={`Society Following (${filterBy(following, "societyName", followingSearch).length})`}
+            searchOpen={followingSearchOpen} onToggleSearch={setFollowingSearchOpen}
+            searchValue={followingSearch} onSearchChange={setFollowingSearch} onClear={() => setFollowingSearch("")}
+          />
+          <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
+            {filterBy(following, "societyName", followingSearch).length === 0
+              ? <p style={{ color: "#999", fontSize: 13 }}>No societies followed yet</p>
+              : filterBy(following, "societyName", followingSearch).map((item, i) => (
+                <SocietyMemberCard key={i} item={item} isJoined={false} onJoin={() => {}}
+                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)} />
+              ))}
+          </div>
+
+          {/* Student Following */}
+          <SearchHeader
+            title={`Student Following (${filterBy(studentFollowing, "name", stuFollowSearch).length})`}
+            searchOpen={stuFollowSearchOpen} onToggleSearch={setStuFollowSearchOpen}
+            searchValue={stuFollowSearch} onSearchChange={setStuFollowSearch} onClear={() => setStuFollowSearch("")}
+          />
+          <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8 }}>
+            {filterBy(studentFollowing, "name", stuFollowSearch).length === 0
+              ? <p style={{ color: "#999", fontSize: 13 }}>No students followed yet</p>
+              : filterBy(studentFollowing, "name", stuFollowSearch).map((item, i) => (
+                <SocietyMemberCard key={i} item={item} isStudent={true} isJoined={false} onJoin={() => {}}
+                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)} />
+              ))}
+          </div>
+        </div>
+
+        {/* ── Posts & News ── */}
+        <div className="cc-card" style={{ display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", gap: 8, padding: "1.25rem 1.5rem 0" }}>
+            {["post", "news"].map(tab => (
+              <button key={tab} onClick={() => setActiveTab(tab)} style={{
+                padding: "8px 20px", borderRadius: 20, border: "none", cursor: "pointer",
+                fontWeight: 600, fontSize: 13, fontFamily: "'Plus Jakarta Sans', sans-serif",
+                background: activeTab === tab ? "#b5651d" : "#f9f5f0",
+                color:      activeTab === tab ? "#fff"    : "#8b5e3c",
+              }}>
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
+          <div style={{ padding: "1.25rem 1.5rem 1.5rem" }}>
+            {activeTab === "post" && (
+              posts.length === 0
+                ? <p style={{ color: "#999", fontSize: 13 }}>No posts uploaded</p>
+                : <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                    {posts.map(post => (
+                      <EventCard key={post._id}
+                        profileimg={getImageUrl(society.profilePic, DEFAULT_SOCIETY)}
+                        societyname={society.societyName} collegename={society.collegeName}
+                        societyId={post.societyId} type={society.societyType}
+                        posterimg={post.image} time={post.createdAt}
+                        description={post.description} formLink={post.formLink}
+                        views={post.views} postId={post._id}
+                        onEditPost={null} onDeletePost={null}
+                      />
+                    ))}
                   </div>
-                </div>
-              ))
+            )}
+            {activeTab === "news" && (
+              news.length === 0
+                ? <p style={{ color: "#999", fontSize: 13 }}>No news uploaded</p>
+                : news.map(item => (
+                    <NewsCardWithActions key={item._id} item={item}
+                      userId={user?.id} onUpdated={null} onDeleted={null} />
+                  ))
             )}
           </div>
         </div>
 
-        {/* Posts & News — same as ProfilePage */}
-        <div className="gradient-card">
-          <div className="post-toggle">
-            <button
-              className={activeTab === "post" ? "active-btn" : ""}
-              onClick={() => setActiveTab("post")}
-            >
-              Post
-            </button>
-            <button
-              className={activeTab === "news" ? "active-btn" : ""}
-              onClick={() => setActiveTab("news")}
-            >
-              News
-            </button>
-          </div>
-
-          {activeTab === "post" && (
-            <div className="post-grid">
-              {posts.length === 0 ? (
-                <p>No posts uploaded</p>
-              ) : (
-                posts.map((post) => (
-                  <EventCard
-                    key={post._id}
-                    profileimg={getImageUrl(
-                      society.profilePic,
-                      DEFAULT_PROFILE,
-                    )}
-                    societyname={society.societyName}
-                    collegename={society.collegeName}
-                    societyId={post.societyId}
-                    type={society.societyType}
-                    posterimg={post.image}
-                    time={post.createdAt}
-                    description={post.description}
-                    formLink={post.formLink}
-                    views={post.views}
-                    postId={post._id}
-                    onEditPost={null}
-                    onDeletePost={null}
-                  />
-                ))
-              )}
-            </div>
-          )}
-
-          {activeTab === "news" && (
-            <div className="news-section">
-              {news.length === 0 ? (
-                <p>No news uploaded</p>
-              ) : (
-                news.map((item) => (
-                  <NewsCardWithActions
-                    key={item._id}
-                    item={item}
-                    userId={user?.id}
-                    onUpdated={null}
-                    onDeleted={null}
-                  />
-                ))
-              )}
-            </div>
-          )}
-        </div>
       </div>
     </>
   );

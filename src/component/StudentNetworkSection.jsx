@@ -1,5 +1,4 @@
 import React from "react";
-import { FaSearch, FaTimes } from "react-icons/fa";
 import "../styles/StudentNetworkSection.css";
 
 /**
@@ -18,50 +17,80 @@ export default function StudentNetworkSection({
   renderCard,
 }) {
   return (
-    <>
-      <div className="section-search-header">
-        <h2 className="section-heading">
-          {title} ({items.length})
-        </h2>
-        <div className="section-search-wrap">
+    <div className="sns-section">
+
+      {/* ── Header ── */}
+      <div className="sns-header">
+        <p className="sns-heading">
+          {title}{" "}
+          <span className="sns-count">({items.length})</span>
+        </p>
+
+        <div className="sns-search-wrap">
           {searchOpen ? (
-            <div className="section-search-box">
-              <FaSearch className="section-search-icon" />
+            <div className="sns-search-box">
+              {/* Search Icon */}
+              <svg
+                className="sns-search-icon"
+                width="13" height="13" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor"
+                strokeWidth="2.5" strokeLinecap="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+
               <input
                 autoFocus
-                className="section-search-input"
+                className="sns-search-input"
                 placeholder="Search..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
+
               <button
-                className="section-search-clear"
+                className="sns-clear-btn"
                 onClick={() => {
                   setSearchValue("");
                   setSearchOpen(false);
                 }}
               >
-                <FaTimes />
+                <svg
+                  width="12" height="12" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor"
+                  strokeWidth="2.5" strokeLinecap="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
               </button>
             </div>
           ) : (
             <button
-              className="section-search-btn"
+              className="sns-search-btn"
               onClick={() => setSearchOpen(true)}
             >
-              <FaSearch />
+              <svg
+                width="13" height="13" viewBox="0 0 24 24"
+                fill="none" stroke="#8b5e3c"
+                strokeWidth="2.5" strokeLinecap="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
             </button>
           )}
         </div>
       </div>
 
-      <div className="horizontal-scrolls">
+      {/* ── Horizontal Scroll ── */}
+      <div className="sns-scroll">
         {items.length === 0 ? (
-          <p className="empty-text">{emptyMessage}</p>
+          <p className="sns-empty">{emptyMessage}</p>
         ) : (
           items.map((item, index) => renderCard(item, index))
         )}
       </div>
-    </>
+    </div>
   );
 }

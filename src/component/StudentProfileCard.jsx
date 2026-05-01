@@ -35,11 +35,11 @@ export default function StudentProfileCard({
           )}
         </div>
 
-        <p className="sp-side-name">{student?.name || "Student Name"}</p>
+        {/* <p className="sp-side-name">{student?.name || "Student Name"}</p> */}
 
-        {student?.userId && (
+        {/* {student?.userId && (
           <span className="sp-uid-pill">{student.userId}</span>
-        )}
+        )} */}
 
         <button className="sp-edit-btn" onClick={onEditClick}>
           <svg

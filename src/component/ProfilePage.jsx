@@ -400,8 +400,8 @@ export default function ProfilePage() {
                   key={i}
                   item={item}
                   isStudent={true}
-                  isJoined={false}
-                  onJoin={() => {}}
+                  isJoined={studentFollowing.some((f) => f._id === item._id)}
+                  onJoin={handleToggleStudentFollowing}
                   onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
                 />
               ))

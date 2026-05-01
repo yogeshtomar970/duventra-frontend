@@ -8,7 +8,7 @@ export default function MsgDeleteModal({ selectedChat, onCancel, onConfirm }) {
         
         <h3>Chat Delete ?</h3>
         <p>
-          All messages will be deleted forever with<strong>{selectedChat?.user.name}</strong>
+          All messages will be deleted forever with <strong>{selectedChat?.user.name}</strong>
         </p>
         <div className="msg-modal-actions">
           <button className="msg-modal-cancel" onClick={onCancel}>Cancel</button>

@@ -12,8 +12,8 @@ export default function useNewsCard({ item, onDeleted }) {
   const userId = user?.societyId || user?.id;
 
   const [liked,        setLiked]        = useState(false);
-  const [likes,        setLikes]        = useState(item.likeCount || 0);
-  const [commentCount, setCommentCount] = useState(item.commentCount || 0);
+  const [likes,        setLikes]        = useState(item?.likeCount || 0);
+  const [commentCount, setCommentCount] = useState(item?.commentCount || 0);
   const [likeLoading,  setLikeLoading]  = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [showShare,    setShowShare]    = useState(false);
@@ -23,7 +23,7 @@ export default function useNewsCard({ item, onDeleted }) {
 
   // Fetch initial like state
   useEffect(() => {
-    if (!userId) return;
+    if (!userId || !item?._id) return;
     fetch(`${API_BASE_URL}/api/news/like/${item._id}/${userId}`)
       .then((r) => r.json())
       .then((d) => { setLiked(d.liked); setLikes(d.count); })

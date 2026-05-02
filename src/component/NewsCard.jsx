@@ -18,6 +18,8 @@ export default function NewsCard({ data, highlighted, onDelete }) {
     handleLike, handleDelete, canModify,
   } = useNewsCard({ item: data, onDeleted: onDelete });
 
+  if (!data) return null;
+
   const imgSrc    = resolveImg(data.image);
   const authorImg = resolveImg(data.userImage);
 

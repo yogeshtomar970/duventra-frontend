@@ -1,5 +1,5 @@
 import API_BASE_URL from "../config/api.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/Profile.css";
@@ -7,6 +7,7 @@ import "../styles/Profile.css";
 // Layout
 import Navbar from "../component/Navbar";
 import BottomNav from "../component/BottomNav";
+import Sidebar from "../component/sidebar";
 
 // Feature components
 import StudentProfileCard from "../component/StudentProfileCard";
@@ -38,6 +39,11 @@ const getImageUrl = (url, fallback) => {
 export default function Studentprofile() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle("no-scroll", sidebarOpen);
+    return () => document.body.classList.remove("no-scroll");
+  }, [sidebarOpen]);
 
   // ── Hooks ──
   const { student, setStudent, loading, notLoggedIn, myNews, setMyNews, getUserId } =
@@ -96,6 +102,7 @@ export default function Studentprofile() {
   return (
     <>
       <Navbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <BottomNav />
 
       <div className="student-container">

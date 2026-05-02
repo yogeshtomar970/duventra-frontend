@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { FiMessageSquare, FiHome } from "react-icons/fi";
+import { FiHome } from "react-icons/fi";
+import ImageViewer from "./ImageViewer";
 import "../styles/ProfileCard.css";
 
 const getImageUrl = (url, fallback) => {
@@ -11,15 +12,11 @@ const getImageUrl = (url, fallback) => {
 
 function getInitials(name) {
   if (!name) return "?";
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
+  return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 }
 
 export default function ProfileCard({ society, onEditClick }) {
+  const [showViewer, setShowViewer] = useState(false);
   const hasImage = !!society?.profilePic;
   const imgSrc = getImageUrl(society?.profilePic, null);
 
@@ -28,7 +25,11 @@ export default function ProfileCard({ society, onEditClick }) {
 
       {/* ── Left Panel ── */}
       <div className="pc4-left">
-        <div className="pc4-avatar-frame">
+        <div
+          className="pc4-avatar-frame"
+          onClick={() => hasImage && setShowViewer(true)}
+          style={{ cursor: hasImage ? "pointer" : "default" }}
+        >
           {hasImage ? (
             <img src={imgSrc} alt="profile" className="pc4-avatar-img" />
           ) : (
@@ -38,21 +39,16 @@ export default function ProfileCard({ society, onEditClick }) {
           )}
         </div>
 
-        {/* <p className="pc4-side-name">{society?.societyName || "Society Name"}</p> */}
-
-        {/* {society?.societyType && (
-          <span className="pc4-type-pill">{society.societyType}</span>
-        )} */}
-
-        <button className="pc4-edit-btn" onClick={onEditClick}>
-          <FaEdit size={13} />
-          Edit profile
-        </button>
+        {onEditClick && (
+          <button className="pc4-edit-btn" onClick={onEditClick}>
+            <FaEdit size={13} />
+            Edit profile
+          </button>
+        )}
       </div>
 
       {/* ── Right Panel ── */}
       <div className="pc4-right">
-
         <div className="pc4-r-header">
           <p className="pc4-r-name">{society?.societyName || "Society Name"}</p>
           <p className="pc4-r-college">
@@ -64,17 +60,13 @@ export default function ProfileCard({ society, onEditClick }) {
         <div className="pc4-divider" />
 
         <div className="pc4-fields">
-       
           <div className="pc4-field">
             <span className="pc4-label">Society Type</span>
             <span className="pc4-val">{society?.societyType || "—"}</span>
           </div>
-          
           <div className="pc4-field">
             <span className="pc4-label">Coordinator Name</span>
-            <span className="pc4-val">
-              {society?.coordinatorName || "Not specified"}
-            </span>
+            <span className="pc4-val">{society?.coordinatorName || "Not specified"}</span>
           </div>
         </div>
 
@@ -85,6 +77,11 @@ export default function ProfileCard({ society, onEditClick }) {
           </div>
         )}
       </div>
+
+      {/* ── Fullscreen image viewer ── */}
+      {showViewer && imgSrc && (
+        <ImageViewer src={imgSrc} onClose={() => setShowViewer(false)} />
+      )}
     </div>
   );
 }

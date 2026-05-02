@@ -12,12 +12,7 @@ export default function NotificationHeader({ unreadCount, onMarkAllRead }) {
       <FontAwesomeIcon icon={faBell} />
       <span>Notifications</span>
 
-      {unreadCount > 0 && (
-        <span className="notif-badge">
-          {unreadCount > 99 ? "99+" : unreadCount}
-        </span>
-      )}
-
+     
       {unreadCount > 0 && (
         <button
           className="mark-read-btn"

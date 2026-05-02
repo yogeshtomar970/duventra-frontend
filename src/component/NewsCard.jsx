@@ -1,5 +1,6 @@
 import React from "react";
 import { FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { resolveImg, fmt } from "../newsHelpers.js";
 import CommentPanel    from "./CommentPanel";
 import ShareSheet      from "./ShareSheet";
@@ -7,11 +8,8 @@ import ImageViewer     from "./ImageViewer";
 import NewsCardActions from "./NewsCardActions";
 import useNewsCard     from "../hooks/useNewsCard";
 
-/**
- * NewsCard
- * Simpler card for the public News feed — no edit, just delete for owner.
- */
 export default function NewsCard({ data, highlighted, onDelete }) {
+  const navigate = useNavigate();
   const {
     userId, liked, likes, commentCount, likeLoading,
     showComments, setShowComments,
@@ -23,6 +21,15 @@ export default function NewsCard({ data, highlighted, onDelete }) {
   const imgSrc    = resolveImg(data.image);
   const authorImg = resolveImg(data.userImage);
 
+  const handleAuthorClick = () => {
+    if (!data.recipientId) return;
+    if (data.uploadedBy === "society") {
+      navigate(`/society-profile?id=${data.recipientId}`);
+    } else {
+      navigate(`/student-profile?id=${data.recipientId}`);
+    }
+  };
+
   return (
     <>
       <article
@@ -31,7 +38,10 @@ export default function NewsCard({ data, highlighted, onDelete }) {
       >
         {/* Header */}
         <div className="nc-card-header">
-          <div className="nc-author-row">
+          <div className="nc-author-row"
+            onClick={handleAuthorClick}
+            style={{ cursor: data.recipientId ? "pointer" : "default" }}
+          >
             {authorImg
               ? <img src={authorImg} alt={data.userName} className="nc-author-avatar" />
               : <div className="nc-author-avatar nc-avatar-fallback">

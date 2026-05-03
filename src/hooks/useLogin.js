@@ -1,57 +1,43 @@
-// src/hooks/useLogin.js — FIXED
-// Ab login pe token bhi localStorage mein store hoga
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_BASE } from "../config/api";
+import API_BASE_URL from "../config/api.js";
 
-export const useLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+/**
+ * useLogin
+ * Email/password state aur login API call handler.
+ */
+export default function useLogin() {
   const navigate = useNavigate();
+  const [email,    setEmail]    = useState("");
+  const [password, setPassword] = useState("");
 
-  const login = async (email, password) => {
-    setLoading(true);
-    setError("");
-
+  const handleLogin = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/auth/login`, {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const result = await res.json();
 
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        return;
-      }
+      if (res.ok) {
+        alert(result.message);
 
-      // ✅ FIXED: Save token + user to localStorage
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("role", data.role);
+        const userData = { ...result.user, role: result.role };
+        localStorage.setItem("user", JSON.stringify(userData));
 
-      // Redirect based on role
-      if (data.role === "society") {
-        navigate("/societyprofile");
-      } else {
+        // SocketContext same-tab mein bhi detect kare isliye manually dispatch
+        window.dispatchEvent(new StorageEvent("storage", { key: "user" }));
+
         navigate("/");
+      } else {
+        alert(result.message || "Login failed");
       }
-    } catch (err) {
-      setError("Network error. Please try again.");
-    } finally {
-      setLoading(false);
+    } catch {
+      alert("Server error");
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("role");
-    navigate("/login");
-  };
-
-  return { login, logout, loading, error };
-};
+  return { email, setEmail, password, setPassword, handleLogin };
+}

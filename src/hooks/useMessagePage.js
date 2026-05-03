@@ -3,11 +3,16 @@ import { useSocket, getLoggedInId } from "../SocketContext";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
-/**
- * useMessagePage
- * Inbox fetch, conversation fetch, send, delete,
- * socket listeners, typing indicator — saari logic yahan.
- */
+// Token helper — localStorage se token uthao
+const authHeaders = (extra = {}) => {
+  const token = localStorage.getItem("token");
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...extra,
+  };
+};
+
 export default function useMessagePage() {
   const myId  = getLoggedInId();
   const socket = useSocket();
@@ -33,10 +38,8 @@ export default function useMessagePage() {
   const selectedChatRef  = useRef(null);
   const inputRef         = useRef(null);
 
-  // keep ref in sync
   useEffect(() => { selectedChatRef.current = selectedChat; }, [selectedChat]);
 
-  // ── Auto-scroll ──────────────────────────────────────
   useEffect(() => {
     if (chatBodyRef.current)
       chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
@@ -46,7 +49,9 @@ export default function useMessagePage() {
   const fetchInbox = useCallback(async () => {
     if (!myId) return;
     try {
-      const res = await fetch(`${BASE_URL}/api/message/inbox/${myId}`);
+      const res = await fetch(`${BASE_URL}/api/message/inbox/${myId}`, {
+        headers: authHeaders(),
+      });
       if (!res.ok) throw new Error("inbox fetch failed");
       const data = await res.json();
       if (Array.isArray(data)) setInbox(data);
@@ -121,7 +126,8 @@ export default function useMessagePage() {
     setLoadingChat(true);
     try {
       const res = await fetch(
-        `${BASE_URL}/api/message/conversation/${myId}/${item.user.userId}`
+        `${BASE_URL}/api/message/conversation/${myId}/${item.user.userId}`,
+        { headers: authHeaders() }
       );
       if (!res.ok) throw new Error("conversation fetch failed");
       const data = await res.json();
@@ -157,7 +163,7 @@ export default function useMessagePage() {
     try {
       const res = await fetch(`${BASE_URL}/api/message/send`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: authHeaders(),
         body: JSON.stringify({ senderId: myId, receiverId: selectedChat.user.userId, text }),
       });
       if (!res.ok) throw new Error("send failed");
@@ -193,7 +199,8 @@ export default function useMessagePage() {
     const t = setTimeout(async () => {
       try {
         const res = await fetch(
-          `${BASE_URL}/api/message/search?q=${encodeURIComponent(search.trim())}&excludeId=${myId}`
+          `${BASE_URL}/api/message/search?q=${encodeURIComponent(search.trim())}&excludeId=${myId}`,
+          { headers: authHeaders() }
         );
         if (!res.ok) throw new Error("search failed");
         const data = await res.json();
@@ -223,7 +230,7 @@ export default function useMessagePage() {
     try {
       const res = await fetch(
         `${BASE_URL}/api/message/conversation/${myId}/${selectedChat.user.userId}`,
-        { method: "DELETE" }
+        { method: "DELETE", headers: authHeaders() }
       );
       if (!res.ok) throw new Error("delete failed");
       setInbox((prev) => prev.filter((c) => c.user.userId !== selectedChat.user.userId));
@@ -242,7 +249,7 @@ export default function useMessagePage() {
       try {
         const res = await fetch(`${BASE_URL}/api/message/${msgId}`, {
           method: "DELETE",
-          headers: { "Content-Type": "application/json" },
+          headers: authHeaders(),
           body: JSON.stringify({ userId: myId }),
         });
         if (!res.ok) throw new Error("delete failed");

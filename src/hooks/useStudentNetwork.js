@@ -38,7 +38,7 @@ export default function useStudentNetwork() {
 
     const socId = user.societyId || "student_" + userId;
 
-    // Society APIs
+    // Society APIs — GET calls, token nahi chahiye
     fetch(`${API_BASE_URL}/api/join/suggestions/${socId}`)
       .then((r) => r.json())
       .then((d) => d.success && setSocietySuggestions(d.data))
@@ -49,7 +49,7 @@ export default function useStudentNetwork() {
       .then((d) => d.success && setSocietyFollowing(d.data))
       .catch(() => {});
 
-    // Student APIs
+    // Student APIs — GET calls, token nahi chahiye
     fetch(`${API_BASE_URL}/api/student/suggestions/${userId}`)
       .then((r) => r.json())
       .then((d) => d.success && setStudentSuggestions(d.data))
@@ -60,7 +60,7 @@ export default function useStudentNetwork() {
       .then((d) => d.success && setStudentFollowing(d.data))
       .catch(() => {});
 
-    // Members — memberType se society aur student alag karo
+    // Members — GET call, token nahi chahiye
     fetch(`${API_BASE_URL}/api/student/members/${userId}`)
       .then((r) => r.json())
       .then((d) => {
@@ -77,10 +77,14 @@ export default function useStudentNetwork() {
   // ── Society handlers ──────────────────────────────────────────────────────
 
   const handleJoinSocietyFromSuggestion = async (item) => {
+    const token = localStorage.getItem("token");
     try {
       const res = await fetch(`${API_BASE_URL}/api/join/join`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ myId: getMyId(), targetId: item.societyId }),
       });
       const data = await res.json();
@@ -94,12 +98,16 @@ export default function useStudentNetwork() {
   };
 
   const handleToggleSocietyFollowing = async (item) => {
+    const token = localStorage.getItem("token");
     const isF = societyFollowing.some((f) => f.societyId === item.societyId);
     try {
       const endpoint = isF ? "unjoin" : "join";
       const res = await fetch(`${API_BASE_URL}/api/join/${endpoint}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ myId: getMyId(), targetId: item.societyId }),
       });
       const data = await res.json();
@@ -118,12 +126,16 @@ export default function useStudentNetwork() {
   };
 
   const handleToggleSocietyMemberFollow = async (item) => {
+    const token = localStorage.getItem("token");
     const isF = societyFollowing.some((f) => f.societyId === item.societyId);
     try {
       const endpoint = isF ? "unjoin" : "join";
       const res = await fetch(`${API_BASE_URL}/api/join/${endpoint}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ myId: getMyId(), targetId: item.societyId }),
       });
       const data = await res.json();
@@ -139,10 +151,14 @@ export default function useStudentNetwork() {
   // ── Student handlers ──────────────────────────────────────────────────────
 
   const handleJoinStudentFromSuggestion = async (item) => {
+    const token = localStorage.getItem("token");
     try {
       const res = await fetch(`${API_BASE_URL}/api/student/follow`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({
           myId: getMyId(),
           targetId: item._id,
@@ -158,12 +174,16 @@ export default function useStudentNetwork() {
   };
 
   const handleToggleStudentFollowing = async (item) => {
+    const token = localStorage.getItem("token");
     const isF = studentFollowing.some((f) => f._id === item._id);
     try {
       if (isF) {
         const res = await fetch(`${API_BASE_URL}/api/student/unfollow`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
           body: JSON.stringify({ myId: getMyId(), targetId: item._id }),
         });
         const data = await res.json();
@@ -174,7 +194,10 @@ export default function useStudentNetwork() {
       } else {
         const res = await fetch(`${API_BASE_URL}/api/student/follow`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
           body: JSON.stringify({
             myId: getMyId(),
             targetId: item._id,
@@ -193,12 +216,16 @@ export default function useStudentNetwork() {
   };
 
   const handleToggleStudentMemberFollow = async (item) => {
+    const token = localStorage.getItem("token");
     const isF = studentFollowing.some((f) => f._id === item._id);
     try {
       if (isF) {
         const res = await fetch(`${API_BASE_URL}/api/student/unfollow`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
           body: JSON.stringify({ myId: getMyId(), targetId: item._id }),
         });
         const data = await res.json();
@@ -207,7 +234,10 @@ export default function useStudentNetwork() {
       } else {
         const res = await fetch(`${API_BASE_URL}/api/student/follow`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
           body: JSON.stringify({
             myId: getMyId(),
             targetId: item._id,

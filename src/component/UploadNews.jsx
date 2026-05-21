@@ -29,6 +29,7 @@ export default function UploadNews() {
     e.preventDefault();
     if (!description.trim()) { setMessage({ text: "Description is required", ok: false }); return; }
 
+    const token = localStorage.getItem("token");
     setLoading(true);
     setMessage({ text: "", ok: true });
 
@@ -40,7 +41,13 @@ export default function UploadNews() {
     if (image) formData.append("image", image);
 
     try {
-      const res  = await fetch(`${API_BASE_URL}/api/news/upload`, { method: "POST", body: formData });
+      const res = await fetch(`${API_BASE_URL}/api/news/upload`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`, // Content-Type mat likho — FormData khud set karta hai
+        },
+        body: formData,
+      });
       const data = await res.json();
       if (res.ok) {
         setMessage({ text: "✅ News published successfully!", ok: true });
@@ -81,7 +88,7 @@ export default function UploadNews() {
             Description <span className="req">*</span>
           </label>
           <textarea
-            placeholder="Write your news story here…"
+            placeholder="Write your news story here..."
             value={description}
             onChange={e => setDescription(e.target.value)}
             maxLength={800}
@@ -93,7 +100,7 @@ export default function UploadNews() {
           )}
 
           <button type="submit" disabled={loading}>
-            {loading ? "Publishing…" : "Publish News"}
+            {loading ? "Publishing..." : "Publish News"}
           </button>
         </form>
       </div>

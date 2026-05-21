@@ -22,7 +22,7 @@ export default function useComments(postId) {
   const userName = user?.name || user?.email || "User";
   const userRole = user?.role || "student";
 
-  // ── Fetch comments ────────────────────────────────────
+  // ── Fetch comments — GET, token nahi chahiye ──────────
   const fetchComments = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/api/comment/${postId}`);
@@ -42,12 +42,16 @@ export default function useComments(postId) {
   // ── Post comment ──────────────────────────────────────
   const handleComment = async () => {
     if (!text.trim() || !userId) return;
+    const token = localStorage.getItem("token");
     setPosting(true);
     setError("");
     try {
       const res = await fetch(`${API_BASE_URL}/api/comment/add`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({
           postId,
           userId,

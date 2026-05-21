@@ -21,7 +21,7 @@ export default function useNewsCard({ item, onDeleted }) {
   const [showDotMenu,  setShowDotMenu]  = useState(false);
   const [showImage,    setShowImage]    = useState(false);
 
-  // Fetch initial like state
+  // Fetch initial like state — GET, token nahi chahiye
   useEffect(() => {
     if (!userId || !item?._id) return;
     fetch(`${API_BASE_URL}/api/news/like/${item._id}/${userId}`)
@@ -32,13 +32,17 @@ export default function useNewsCard({ item, onDeleted }) {
 
   const handleLike = async () => {
     if (!userId || likeLoading) return;
+    const token = localStorage.getItem("token");
     setLikeLoading(true);
     setLiked((p) => !p);
     setLikes((p) => (liked ? p - 1 : p + 1));
     try {
       const res = await fetch(`${API_BASE_URL}/api/news/like/toggle`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ newsId: item._id, userId }),
       });
       const d = await res.json();
@@ -54,10 +58,14 @@ export default function useNewsCard({ item, onDeleted }) {
 
   const handleDelete = async () => {
     if (!window.confirm("Delete this news post?")) return;
+    const token = localStorage.getItem("token");
     try {
       const res = await fetch(`${API_BASE_URL}/api/news/${item._id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ userId }),
       });
       const data = await res.json();

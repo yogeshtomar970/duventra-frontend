@@ -51,6 +51,8 @@ export default function StudentPublicProfile() {
 
   const getLoggedInUser = () => JSON.parse(localStorage.getItem("user"));
 
+  // ── GET calls — token nahi chahiye ──────────────────────────────────────
+
   useEffect(() => {
     if (!studentUserId) return;
     fetch(`${API_BASE_URL}/api/student/public/${studentUserId}`)
@@ -122,6 +124,8 @@ export default function StudentPublicProfile() {
       .catch(() => {});
   }, [student]);
 
+  // ── Follow / Unfollow — POST, token chahiye ──────────────────────────────
+
   const handleToggleFollow = async () => {
     const me = getLoggedInUser();
     if (!me) return alert("Please login first");
@@ -133,6 +137,7 @@ export default function StudentPublicProfile() {
 
     if (!isSociety && me.id === student._id?.toString()) return;
 
+    const token = localStorage.getItem("token");
     setFollowLoading(true);
     try {
       const endpoint = isFollowing
@@ -140,7 +145,10 @@ export default function StudentPublicProfile() {
         : "/api/student/follow";
       const res = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
         body: JSON.stringify({ myId, targetId: student._id, followerType }),
       });
       const data = await res.json();

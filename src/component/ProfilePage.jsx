@@ -84,9 +84,9 @@ export default function ProfilePage() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.id) {
       fetchProfile(user.id);
-      fetch(`${API_BASE_URL}/api/news/all`)
+      fetch(`${API_BASE_URL}/api/news/user/${user.id}`)
         .then((r) => r.json())
-        .then((data) => setMyNews(data.filter((i) => i.userId === user.id)))
+        .then((data) => setMyNews(Array.isArray(data.news) ? data.news : []))
         .catch(() => {});
     }
   }, []);
@@ -96,18 +96,28 @@ export default function ProfilePage() {
     if (!user?.societyId) return;
     fetch(`${API_BASE_URL}/api/join/suggestions/${user.societyId}`)
       .then((r) => r.json())
-      .then((data) => { if (data.success) setSuggestions(data.data); })
+      .then((data) => {
+        if (data.success) setSuggestions(data.data);
+      })
       .catch(() => {});
     fetch(`${API_BASE_URL}/api/join/following/${user.societyId}`)
       .then((r) => r.json())
-      .then((data) => { if (data.success) setFollowing(data.data); })
+      .then((data) => {
+        if (data.success) setFollowing(data.data);
+      })
       .catch(() => {});
     fetch(`${API_BASE_URL}/api/join/members/${user.societyId}`)
       .then((r) => r.json())
       .then((data) => {
         if (data.success) {
-          setMembers(data.data.filter(m => !m.memberType || m.memberType === "society"));
-          setStudentMembers(data.data.filter(m => m.memberType === "student"));
+          setMembers(
+            data.data.filter(
+              (m) => !m.memberType || m.memberType === "society",
+            ),
+          );
+          setStudentMembers(
+            data.data.filter((m) => m.memberType === "student"),
+          );
         }
       })
       .catch(() => {});
@@ -118,11 +128,15 @@ export default function ProfilePage() {
     if (!user?.id) return;
     fetch(`${API_BASE_URL}/api/student/suggestions/${user.id}`)
       .then((r) => r.json())
-      .then((data) => { if (data.success) setStudentSuggestions(data.data); })
+      .then((data) => {
+        if (data.success) setStudentSuggestions(data.data);
+      })
       .catch(() => {});
     fetch(`${API_BASE_URL}/api/student/following/${user.id}`)
       .then((r) => r.json())
-      .then((data) => { if (data.success) setStudentFollowing(data.data); })
+      .then((data) => {
+        if (data.success) setStudentFollowing(data.data);
+      })
       .catch(() => {});
   }, []);
 
@@ -132,7 +146,9 @@ export default function ProfilePage() {
     fetch(`${API_BASE_URL}/api/post/all`)
       .then((r) => r.json())
       .then((data) =>
-        setMyPosts(data.posts.filter((p) => p.societyName === society.societyName))
+        setMyPosts(
+          data.posts.filter((p) => p.societyName === society.societyName),
+        ),
       )
       .catch(() => {});
   }, [society]);
@@ -144,7 +160,7 @@ export default function ProfilePage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ myId, targetId }),
     });
@@ -157,7 +173,7 @@ export default function ProfilePage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ myId, targetId }),
     });
@@ -211,9 +227,13 @@ export default function ProfilePage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ myId: user.societyId, targetId: item._id, followerType: "society" }),
+      body: JSON.stringify({
+        myId: user.societyId,
+        targetId: item._id,
+        followerType: "society",
+      }),
     });
     const data = await res.json();
     if (data.followed) {
@@ -231,7 +251,7 @@ export default function ProfilePage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ myId: user.societyId, targetId: item._id }),
       });
@@ -245,9 +265,13 @@ export default function ProfilePage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ myId: user.societyId, targetId: item._id, followerType: "society" }),
+        body: JSON.stringify({
+          myId: user.societyId,
+          targetId: item._id,
+          followerType: "society",
+        }),
       });
       const data = await res.json();
       if (data.followed) {
@@ -269,27 +293,34 @@ export default function ProfilePage() {
     const user = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${API_BASE_URL}/api/post/update/${editingPost._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+      const res = await fetch(
+        `${API_BASE_URL}/api/post/update/${editingPost._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            societyId: user.societyId,
+            description: editDescription,
+            formLink: editFormLink,
+          }),
         },
-        body: JSON.stringify({
-          societyId: user.societyId,
-          description: editDescription,
-          formLink: editFormLink,
-        }),
-      });
+      );
       const data = await res.json();
       if (data.success) {
         alert("Post updated successfully!");
         setMyPosts((p) =>
           p.map((post) =>
             post._id === editingPost._id
-              ? { ...post, description: editDescription, formLink: editFormLink }
-              : post
-          )
+              ? {
+                  ...post,
+                  description: editDescription,
+                  formLink: editFormLink,
+                }
+              : post,
+          ),
         );
         setShowEditPostModal(false);
         setEditingPost(null);
@@ -302,7 +333,8 @@ export default function ProfilePage() {
   };
 
   const handleDeletePost = async (post) => {
-    if (!window.confirm("Kya aap sach mein yeh post delete karna chahte hain?")) return;
+    if (!window.confirm("Kya aap sach mein yeh post delete karna chahte hain?"))
+      return;
     const user = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
     try {
@@ -310,7 +342,7 @@ export default function ProfilePage() {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ societyId: user.societyId }),
       });
@@ -339,7 +371,6 @@ export default function ProfilePage() {
       <BottomNav />
 
       <div className="profile-container">
-
         {/* ── Profile Card ── */}
         <ProfileCard
           society={society}
@@ -362,7 +393,10 @@ export default function ProfilePage() {
             editFormLink={editFormLink}
             setEditFormLink={setEditFormLink}
             onSave={handleUpdatePost}
-            onClose={() => { setShowEditPostModal(false); setEditingPost(null); }}
+            onClose={() => {
+              setShowEditPostModal(false);
+              setEditingPost(null);
+            }}
           />
         )}
 
@@ -383,7 +417,6 @@ export default function ProfilePage() {
 
         {/* ── Members / Following / Suggestions ── */}
         <div className="gradient-card">
-
           {/* Society Members */}
           <SearchHeader
             title={`Member (${filterByName(members, "societyName", memberSearch).length})`}
@@ -397,15 +430,21 @@ export default function ProfilePage() {
             {filterByName(members, "societyName", memberSearch).length === 0 ? (
               <p>No members found</p>
             ) : (
-              filterByName(members, "societyName", memberSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isJoined={following.some((f) => f.societyId === item.societyId)}
-                  onJoin={handleToggleMemberFollow}
-                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)}
-                />
-              ))
+              filterByName(members, "societyName", memberSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isJoined={following.some(
+                      (f) => f.societyId === item.societyId,
+                    )}
+                    onJoin={handleToggleMemberFollow}
+                    onCardClick={() =>
+                      navigate(`/society-profile?id=${item.societyId}`)
+                    }
+                  />
+                ),
+              )
             )}
           </div>
 
@@ -419,19 +458,24 @@ export default function ProfilePage() {
             onClear={() => setStuMemberSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterByName(studentMembers, "name", stuMemberSearch).length === 0 ? (
+            {filterByName(studentMembers, "name", stuMemberSearch).length ===
+            0 ? (
               <p>No student members found</p>
             ) : (
-              filterByName(studentMembers, "name", stuMemberSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isStudent={true}
-                  isJoined={studentFollowing.some((f) => f._id === item._id)}
-                  onJoin={handleToggleStudentFollowing}
-                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                />
-              ))
+              filterByName(studentMembers, "name", stuMemberSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isStudent={true}
+                    isJoined={studentFollowing.some((f) => f._id === item._id)}
+                    onJoin={handleToggleStudentFollowing}
+                    onCardClick={() =>
+                      navigate(`/student-profile?id=${item.userId}`)
+                    }
+                  />
+                ),
+              )
             )}
           </div>
 
@@ -445,18 +489,23 @@ export default function ProfilePage() {
             onClear={() => setFollowingSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterByName(following, "societyName", followingSearch).length === 0 ? (
+            {filterByName(following, "societyName", followingSearch).length ===
+            0 ? (
               <p>No following found</p>
             ) : (
-              filterByName(following, "societyName", followingSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isJoined={true}
-                  onJoin={handleToggleFollowing}
-                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)}
-                />
-              ))
+              filterByName(following, "societyName", followingSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isJoined={true}
+                    onJoin={handleToggleFollowing}
+                    onCardClick={() =>
+                      navigate(`/society-profile?id=${item.societyId}`)
+                    }
+                  />
+                ),
+              )
             )}
           </div>
 
@@ -470,18 +519,23 @@ export default function ProfilePage() {
             onClear={() => setSuggSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterByName(suggestions, "societyName", suggSearch).length === 0 ? (
+            {filterByName(suggestions, "societyName", suggSearch).length ===
+            0 ? (
               <p>No suggestions found</p>
             ) : (
-              filterByName(suggestions, "societyName", suggSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isJoined={false}
-                  onJoin={handleJoinFromSuggestion}
-                  onCardClick={() => navigate(`/society-profile?id=${item.societyId}`)}
-                />
-              ))
+              filterByName(suggestions, "societyName", suggSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isJoined={false}
+                    onJoin={handleJoinFromSuggestion}
+                    onCardClick={() =>
+                      navigate(`/society-profile?id=${item.societyId}`)
+                    }
+                  />
+                ),
+              )
             )}
           </div>
 
@@ -495,19 +549,24 @@ export default function ProfilePage() {
             onClear={() => setStuSuggSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterByName(studentSuggestions, "name", stuSuggSearch).length === 0 ? (
+            {filterByName(studentSuggestions, "name", stuSuggSearch).length ===
+            0 ? (
               <p>No student suggestions found</p>
             ) : (
-              filterByName(studentSuggestions, "name", stuSuggSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isStudent={true}
-                  isJoined={false}
-                  onJoin={handleJoinStudentFromSuggestion}
-                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                />
-              ))
+              filterByName(studentSuggestions, "name", stuSuggSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isStudent={true}
+                    isJoined={false}
+                    onJoin={handleJoinStudentFromSuggestion}
+                    onCardClick={() =>
+                      navigate(`/student-profile?id=${item.userId}`)
+                    }
+                  />
+                ),
+              )
             )}
           </div>
 
@@ -521,22 +580,26 @@ export default function ProfilePage() {
             onClear={() => setStuFollowSearch("")}
           />
           <div className="horizontal-scroll">
-            {filterByName(studentFollowing, "name", stuFollowSearch).length === 0 ? (
+            {filterByName(studentFollowing, "name", stuFollowSearch).length ===
+            0 ? (
               <p>No students found</p>
             ) : (
-              filterByName(studentFollowing, "name", stuFollowSearch).map((item, i) => (
-                <SocietyMemberCard
-                  key={i}
-                  item={item}
-                  isStudent={true}
-                  isJoined={true}
-                  onJoin={handleToggleStudentFollowing}
-                  onCardClick={() => navigate(`/student-profile?id=${item.userId}`)}
-                />
-              ))
+              filterByName(studentFollowing, "name", stuFollowSearch).map(
+                (item, i) => (
+                  <SocietyMemberCard
+                    key={i}
+                    item={item}
+                    isStudent={true}
+                    isJoined={true}
+                    onJoin={handleToggleStudentFollowing}
+                    onCardClick={() =>
+                      navigate(`/student-profile?id=${item.userId}`)
+                    }
+                  />
+                ),
+              )
             )}
           </div>
-
         </div>
 
         {/* ── Post / News Tab ── */}
@@ -549,13 +612,14 @@ export default function ProfilePage() {
           onEditPost={handleEditPostOpen}
           onDeletePost={handleDeletePost}
           onNewsUpdated={(updated) =>
-            setMyNews((p) => p.map((n) => (n._id === updated._id ? updated : n)))
+            setMyNews((p) =>
+              p.map((n) => (n._id === updated._id ? updated : n)),
+            )
           }
           onNewsDeleted={(id) =>
             setMyNews((p) => p.filter((n) => n._id !== id))
           }
         />
-
       </div>
     </>
   );

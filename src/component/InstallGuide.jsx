@@ -25,60 +25,60 @@ const STEPS = {
     browser: "Chrome (Android)",
     icon: "🌐",
     steps: [
-      { icon: "⋮", text: 'Upar right corner mein teen dots (⋮) par tap karo' },
-      { icon: "📲", text: '"Add to Home screen" ya "Install app" option dhundho' },
-      { icon: "✅", text: 'Pop-up aaye toh "Install" ya "Add" tap karo' },
-      { icon: "🏠", text: 'App ab aapke Home Screen par aa gayi!' },
+      { icon: "⋮", text: 'Tap the three dots (⋮) in the upper right corner' },
+      { icon: "📲", text: 'Find the "Add to Home Screen" or "Install App" option.' },
+      { icon: "✅", text: 'If a pop-up appears, tap "Install" or "Add"' },
+      { icon: "🏠", text: 'The app is now on your home screen!' },
     ],
   },
   "android-samsung": {
     browser: "Samsung Internet",
     icon: "🌐",
     steps: [
-      { icon: "☰", text: 'Neeche menu icon (≡) par tap karo' },
-      { icon: "➕", text: '"Add page to" → "Home screen" select karo' },
-      { icon: "✅", text: '"Add" button tap karo' },
-      { icon: "🏠", text: 'App Home Screen par install ho gayi!' },
+      { icon: "☰", text: 'Tap on the bottom menu icon (≡)' },
+      { icon: "➕", text: 'By selecting "Add page to" → "Home screen"' },
+      { icon: "✅", text: 'Tap the "Add" button' },
+      { icon: "🏠", text: 'The app is installed on the home screen!' },
     ],
   },
   "android-firefox": {
     browser: "Firefox (Android)",
     icon: "🦊",
     steps: [
-      { icon: "⋮", text: 'Right corner mein teen dots par tap karo' },
-      { icon: "📲", text: '"Install" ya "Add to Home Screen" dhundho' },
-      { icon: "✅", text: 'Confirm karo' },
-      { icon: "🏠", text: 'Home Screen par shortcut ban gayi!' },
+      { icon: "⋮", text: 'Tap on the three dots in the right corner' },
+      { icon: "📲", text: 'Find "Install" or "Add to Home Screen"' },
+      { icon: "✅", text: 'Please confirm' },
+      { icon: "🏠", text: 'Shortcut created on home screen!' },
     ],
   },
   "ios-safari": {
     browser: "Safari (iPhone/iPad)",
     icon: "🧭",
     steps: [
-      { icon: "⬆️", text: 'Neeche Share button (⬆️) par tap karo' },
-      { icon: "📲", text: 'Scroll karke "Add to Home Screen" dhundho' },
-      { icon: "✏️", text: 'Naam change karo ya waise hi chhod do, phir "Add" tap karo' },
-      { icon: "🏠", text: 'App Home Screen par aa gayi bilkul native app ki tarah!' },
+      { icon: "⬆️", text: 'Tap on the Share button (⬆️) below' },
+      { icon: "📲", text: 'Scroll to find "Add to Home Screen"' },
+      { icon: "✏️", text: 'Change the name or leave it as is, then tap "Add"' },
+      { icon: "🏠", text: 'The app appears on the home screen just like a native app!' },
     ],
   },
   "ios-chrome": {
     browser: "Chrome (iPhone)",
     icon: "🌐",
     steps: [
-      { icon: "⬆️", text: 'Neeche Share icon (⬆️) par tap karo' },
-      { icon: "📲", text: '"Add to Home Screen" option select karo' },
-      { icon: "✅", text: '"Add" tap karo' },
-      { icon: "🏠", text: 'Done! App Home Screen par mil jaayegi' },
+      { icon: "⬆️", text: 'Tap on the Share icon (⬆️) below' },
+      { icon: "📲", text: 'By selecting "Add to Home Screen" option' },
+      { icon: "✅", text: 'Tap "Add"' },
+      { icon: "🏠", text: 'Done! The app is available on the home screen.' },
     ],
   },
   desktop: {
     browser: "Desktop / Chrome",
     icon: "💻",
     steps: [
-      { icon: "⋮", text: 'Browser ke upar right mein teen dots par click karo' },
-      { icon: "📲", text: '"Cast, save, and share" → "Install page as app" click karo' },
-      { icon: "✅", text: 'Pop-up mein "Install" click karo' },
-      { icon: "🏠", text: 'App desktop par shortcut ki tarah khulegi!' },
+      { icon: "⋮", text: 'Click on the three dots on the top right of the browser.' },
+      { icon: "📲", text: 'Click "Cast, save, and share" → "Install page as app"' },
+      { icon: "✅", text: 'Click "Install" in the pop-up' },
+      { icon: "🏠", text: 'The app will open as a shortcut on the desktop!' },
     ],
   },
 };
@@ -122,16 +122,16 @@ export default function InstallGuide() {
         {/* Top: Logo + Title */}
         <div style={styles.header}>
           <img src="/logo.png" alt="logo" style={styles.logo} />
-          <h1 style={styles.title}>App Install Karo 📲</h1>
+          <h1 style={styles.title}>Install App 📲</h1>
           <p style={styles.subtitle}>
-            Duventra ko apne phone par <strong>directly app ki tarah</strong> use karo — bilkul free!
+           Use Duventra <strong>directly as an app</strong> on your phone — absolutely free!
           </p>
         </div>
 
         {/* Browser badge */}
         <div style={styles.browserBadge}>
           <span style={{ fontSize: 16 }}>{info.icon}</span>
-          <span style={styles.browserText}>{info.browser} ke liye</span>
+          <span style={styles.browserText}> for {info.browser}</span>
         </div>
 
         {/* Step progress dots */}
@@ -164,16 +164,16 @@ export default function InstallGuide() {
         {/* Buttons */}
         <div style={styles.buttonRow}>
           <button onClick={handleSkip} style={styles.skipBtn}>
-            Baad mein
+            Later
           </button>
           <button onClick={nextStep} style={styles.nextBtn}>
-            {isLast ? "Done! 🎉" : "Agla Step →"}
+            {isLast ? "Done! 🎉" : "Next Step →"}
           </button>
         </div>
 
         {/* Tip */}
         <p style={styles.tip}>
-          💡 Ek baar install karne ke baad yeh guide dobara nahi aayegi
+          💡Once installed, this guide will not appear again.
         </p>
       </div>
     </div>

@@ -34,12 +34,11 @@ export default function useStudentData() {
       .finally(() => setLoading(false));
 
     // News fetch
-    fetch(`${API_BASE_URL}/api/news/all`)
-      .then((res) => res.json())
-      .then((data) => {
-        setMyNews(data.filter((item) => item.userId === userId));
-      })
-      .catch(() => {});
+   // ✅ Naya
+fetch(`${API_BASE_URL}/api/news/user/${userId}`)
+  .then((res) => res.json())
+  .then((data) => setMyNews(Array.isArray(data.news) ? data.news : []))
+  .catch(() => {});
   }, []);
 
   return {

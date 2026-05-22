@@ -77,7 +77,7 @@ export default function CommentPanel({ newsId, onClose }) {
           {!loading && comments.length === 0 && (
             <p className="nc-empty-text">No comments yet. Be the first!</p>
           )}
-          // ✅ Naya — profilePic hai toh image, nahi toh letter
+          
           {comments.map((c) => (
             <div key={c._id} className="nc-comment-item">
               <div className="nc-comment-avatar">

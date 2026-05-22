@@ -106,17 +106,11 @@ export default function SocietyPublicProfile() {
 
   useEffect(() => {
     if (!society?._id) return;
-    fetch(`${API_BASE_URL}/api/news/all`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (Array.isArray(d))
-          setNews(
-            d.filter(
-              (item) => item.userId?.toString() === society._id?.toString(),
-            ),
-          );
-      })
-      .catch(() => {});
+   // ✅ Naya
+fetch(`${API_BASE_URL}/api/news/user/${society._id}`)
+  .then((r) => r.json())
+  .then((d) => setNews(Array.isArray(d.news) ? d.news : []))
+  .catch(() => {});
   }, [society]);
 
   const handleToggleJoin = async () => {

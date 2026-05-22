@@ -111,17 +111,10 @@ export default function StudentPublicProfile() {
       .catch(() => {});
 
     // News
-    fetch(`${API_BASE_URL}/api/news/all`)
-      .then((r) => r.json())
-      .then((d) => {
-        if (Array.isArray(d))
-          setNews(
-            d.filter(
-              (item) => item.userId?.toString() === studentMongoId?.toString(),
-            ),
-          );
-      })
-      .catch(() => {});
+ fetch(`${API_BASE_URL}/api/news/user/${studentMongoId}`)
+  .then((r) => r.json())
+  .then((d) => setNews(Array.isArray(d.news) ? d.news : []))
+  .catch(() => {});
   }, [student]);
 
   // ── Follow / Unfollow — POST, token chahiye ──────────────────────────────
@@ -147,7 +140,7 @@ export default function StudentPublicProfile() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ myId, targetId: student._id, followerType }),
       });

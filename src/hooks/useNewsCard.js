@@ -9,7 +9,8 @@ import { getUser } from "../newsHelpers.js";
  */
 export default function useNewsCard({ item, onDeleted }) {
   const user   = getUser();
-  const userId = user?.societyId || user?.id;
+  const userId = user?.id;                          // hamesha MongoDB _id — delete match karta hai
+  const societyId = user?.societyId || null;        // sirf canModify check ke liye
 
   const [liked,        setLiked]        = useState(false);
   const [likes,        setLikes]        = useState(item?.likeCount || 0);
@@ -78,8 +79,7 @@ export default function useNewsCard({ item, onDeleted }) {
 
   const canModify = userId && (
     userId === String(item.userId) ||
-    userId === String(item.uploadedBy) ||
-    userId === String(item.societyId)
+    (societyId && societyId === String(item.recipientId))
   );
 
   return {

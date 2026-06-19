@@ -1,7 +1,7 @@
 import React from "react";
 import { getAvatar, formatTime } from "../hooks/messageUtils.js";
 import "../styles/MsgChatWindow.css";
-import { FaRecycle } from "react-icons/fa";
+import { FaRecycle, FaTrash } from "react-icons/fa";
 
 export default function MsgChatWindow({
   selectedChat,
@@ -60,7 +60,7 @@ export default function MsgChatWindow({
           onClick={onDeleteChatClick}
           title="Delete conversation"
         >
-          <FaRecycle />
+          <FaTrash />
         </button>
       </div>
 

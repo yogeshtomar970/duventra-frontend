@@ -109,12 +109,22 @@ export default function useMessagePage() {
     const onMsgDeleted = ({ messageId }) =>
       setMessages((prev) => prev.filter((m) => m._id !== messageId));
 
+    // Dusre ne messages padhe → apne sent messages ki ticks blue karo
+    const onMessagesRead = ({ readerId, senderId }) => {
+      if (senderId === myId) {
+        setMessages((prev) =>
+          prev.map((m) => (m.senderId === myId && m.receiverId === readerId ? { ...m, read: true } : m))
+        );
+      }
+    };
+
     socket.on("new_message", onNewMessage);
     socket.on("typing", onTyping);
     socket.on("stop_typing", onStopTyping);
     socket.on("user_online", onOnline);
     socket.on("user_offline", onOffline);
     socket.on("message_deleted", onMsgDeleted);
+    socket.on("messages_read", onMessagesRead);
 
     return () => {
       socket.off("new_message", onNewMessage);
@@ -123,6 +133,7 @@ export default function useMessagePage() {
       socket.off("user_online", onOnline);
       socket.off("user_offline", onOffline);
       socket.off("message_deleted", onMsgDeleted);
+      socket.off("messages_read", onMessagesRead);
     };
   }, [socket, myId, fetchInbox]);
 
@@ -150,6 +161,10 @@ export default function useMessagePage() {
           c.user.userId === item.user.userId ? { ...c, unread: 0 } : c,
         ),
       );
+      // Socket se sender ko batao ke messages padh liye
+      if (socket) {
+        socket.emit("messages_read", { readerId: myId, senderId: item.user.userId });
+      }
     } catch (e) {
       console.error("Conversation fetch error:", e);
     } finally {
@@ -279,24 +294,22 @@ export default function useMessagePage() {
   const handleDeleteMessage = async (msgId, mine) => {
     const token = localStorage.getItem("token");
     setContextMenu(null);
+    // Optimistically remove from UI
     setMessages((prev) => prev.filter((m) => m._id !== msgId));
-    if (mine) {
-      try {
-        const res = await fetch(`${BASE_URL}/api/message/${msgId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ userId: myId }),
-        });
-        if (!res.ok) throw new Error("delete failed");
-        fetchInbox();
-      } catch (e) {
-        console.error("Delete error:", e);
-      }
-    } else {
+    // Dono (sender aur receiver) API call karein — backend deletedFor handle karta hai
+    try {
+      const res = await fetch(`${BASE_URL}/api/message/${msgId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId: myId }),
+      });
+      if (!res.ok) throw new Error("delete failed");
       fetchInbox();
+    } catch (e) {
+      console.error("Delete error:", e);
     }
   };
 

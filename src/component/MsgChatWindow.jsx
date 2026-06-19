@@ -60,7 +60,7 @@ export default function MsgChatWindow({
           onClick={onDeleteChatClick}
           title="Delete conversation"
         >
-          <FaTrash />
+          <FaTrash style={{color:"red"}}/>
         </button>
       </div>
 

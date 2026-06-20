@@ -25,6 +25,7 @@ export default function MessageCard() {
     showSearch,
     isTyping,
     onlineUsers,
+    lastSeenMap,
     loadingInbox,
     loadingChat,
     loadingSearch,
@@ -82,6 +83,7 @@ export default function MessageCard() {
           inputText={inputText}
           isTyping={isTyping}
           onlineUsers={onlineUsers}
+          lastSeenMap={lastSeenMap}
           sending={sending}
           contextMenu={contextMenu}
           socket={socket}

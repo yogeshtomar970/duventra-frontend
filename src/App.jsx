@@ -7,6 +7,7 @@ import MessagePage from "./component/MessageCard";
 import ProfilePage from "./component/ProfilePage";
 import SocietyProfilePageLink from "./component/societyprofilelink";
 import Login from "./component/Login";
+import ForgotPassword from "./component/ForgotPassword";
 import Signup from "./component/Welcome";
 import StudentSignup from "./component/StudentSignup";
 import SocietySignup from "./component/SocietySignup";
@@ -72,6 +73,7 @@ function App() {
         />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/studentsignup" element={<StudentSignup />} />
         <Route path="/societysignup" element={<SocietySignup />} />

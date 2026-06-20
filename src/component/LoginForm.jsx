@@ -30,6 +30,10 @@ export default function LoginForm({
         onKeyDown={(e) => e.key === "Enter" && onLogin()}
       />
 
+      <Link to="/forgot-password" className="forgot-password-link">
+        Forgot password?
+      </Link>
+
       <button className="btn" onClick={onLogin}>
         Login
       </button>

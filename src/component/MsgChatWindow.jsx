@@ -141,7 +141,7 @@ export default function MsgChatWindow({
                           onDeleteMessage(msg._id, mine);
                         }}
                       >
-                        🗑️ Delete
+                        Delete
                       </button>
                     )}
                 </div>

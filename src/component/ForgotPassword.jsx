@@ -17,7 +17,7 @@ export default function ForgotPassword() {
   // ── Step 1: Email check ───────────────────────────────
   const handleCheckEmail = async () => {
     setError("");
-    if (!email.trim()) return setError("Email daalein");
+    if (!email.trim()) return setError("Enter Email");
 
     setLoading(true);
     try {
@@ -27,7 +27,7 @@ export default function ForgotPassword() {
         body: JSON.stringify({ email: email.trim() }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Email nahi mila");
+      if (!res.ok) throw new Error(data.message || "Email not found");
 
       setStep(2);
     } catch (e) {
@@ -41,9 +41,9 @@ export default function ForgotPassword() {
   const handleResetPassword = async () => {
     setError("");
     if (newPassword.length < 6)
-      return setError("Password kam se kam 6 characters ka hona chahiye");
+      return setError("The password must be at least 6 characters long.");
     if (newPassword !== confirmPassword)
-      return setError("Password match nahi kar raha");
+      return setError("The password does not match.");
 
     setLoading(true);
     try {
@@ -53,9 +53,9 @@ export default function ForgotPassword() {
         body: JSON.stringify({ email: email.trim(), newPassword }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Kuch galat ho gaya");
+      if (!res.ok) throw new Error(data.message || "something went wrong");
 
-      setInfo("Password reset ho gaya! Login page pe le ja rahe hain...");
+      setInfo("Password reset! Redirecting to the login page...");
       setTimeout(() => navigate("/login"), 1800);
     } catch (e) {
       setError(e.message);
@@ -80,7 +80,7 @@ export default function ForgotPassword() {
 
         {step === 1 && (
           <>
-            <p className="fp-subtext">Apna registered email daalein.</p>
+            <p className="fp-subtext">Enter your registered email.</p>
             <input
               type="email"
               placeholder="Email"
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
               onKeyDown={(e) => e.key === "Enter" && handleCheckEmail()}
             />
             <button className="fp-btn" onClick={handleCheckEmail} disabled={loading}>
-              {loading ? "Check ho raha hai..." : "Continue"}
+              {loading ? "Checking" : "Continue"}
             </button>
           </>
         )}
@@ -97,29 +97,29 @@ export default function ForgotPassword() {
         {step === 2 && (
           <>
             <p className="fp-subtext">
-              <strong>{email}</strong> ke liye naya password set karein.
+             Set a new password for the <strong>{email}</strong>
             </p>
             <input
               type="password"
-              placeholder="Naya password"
+              placeholder="New password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
             <input
               type="password"
-              placeholder="Naya password confirm karein"
+              placeholder="Confirm new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleResetPassword()}
             />
             <button className="fp-btn" onClick={handleResetPassword} disabled={loading}>
-              {loading ? "Set ho raha hai..." : "Reset Password"}
+              {loading ? "Setting up..." : "Reset Password"}
             </button>
             <button
               className="fp-link-btn"
               onClick={() => { setStep(1); setError(""); }}
             >
-              Email change karein
+              Change email
             </button>
           </>
         )}

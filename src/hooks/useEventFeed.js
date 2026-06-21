@@ -96,16 +96,27 @@ export default function useEventFeed({ filters, scrollToPostId }) {
 
   const getProfileImg = (post) => {
     if (post.profilePic) {
-      return post.profilePic.startsWith("http")
+      const url = post.profilePic.startsWith("http")
         ? post.profilePic
         : `${API_BASE_URL}${post.profilePic}`;
+      // Avatar chhota hai, isliye aur bhi zyada compress kar sakte hain
+      if (url.includes("res.cloudinary.com")) {
+        return url.replace("/upload/", "/upload/f_auto,q_auto,w_100,h_100,c_fill/");
+      }
+      return url;
     }
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(post.societyName || "S")}&background=0e132f&color=fff`;
   };
 
   const getPosterImg = (post) => {
     if (!post.image) return null;
-    return post.image.startsWith("http") ? post.image : `${API_BASE_URL}${post.image}`;
+    if (!post.image.startsWith("http")) return `${API_BASE_URL}${post.image}`;
+    // Cloudinary URL hai → auto-compress + resize karo (feed mein full-res nahi chahiye)
+    // f_auto = best format (webp/avif), q_auto = auto quality, w_800 = max width
+    if (post.image.includes("res.cloudinary.com")) {
+      return post.image.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
+    }
+    return post.image;
   };
 
   return {

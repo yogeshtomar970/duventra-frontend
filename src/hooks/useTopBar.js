@@ -3,30 +3,29 @@ import { useState, useEffect, useRef } from "react";
 export const menuData = [
   {
     name: "Fest & Event",
-    items: ["Cultural Event", "Sports Event", "Tech Event", "Academic Event"],
+    items: ["Fest & Event","Cultural Event", "Sports Event", "Tech Event", "Academic Event"],
   },
   {
     name: "Competition",
-    items: ["Debates", "Writing", "Gaming", "Design", "Quiz"],
+    items: ["Competition","Debates", "Writing", "Gaming", "Design", "Quiz"],
   },
   {
     name: "E-Cell",
-    items: ["Entrepreneurship", "Startup", "Internship"],
+    items: ["E-Cell","Entrepreneurship", "Startup", "Internship"],
   },
   {
     name: "Skills",
-    items: ["Workshop", "Courses"],
+    items: ["Skills","Workshop", "Courses"],
   },
   {
     name: "Others",
-    items: ["NCC", "Campaigning"],
+    items: ["Conference","NCC", "Campaigning"],
   },
 ];
 
 export const collegeList = [
   "Shyam Lal College",
-  "Hansraj College",
-  "Hindu College",
+  
 ];
 
 export default function useTopBar({ onSearch, onFilterChange }) {

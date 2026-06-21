@@ -31,20 +31,25 @@ export default function UploadPost() {
   }, []);
 
   const eventOptions = [
+    "Fest & Event",
     "Academic Event",
     "Cultural Event",
     "Sports Event",
     "Tech Event",
+    "Competition",
     "Debates",
     "Writing",
     "Gaming",
     "Design",
     "Quiz",
+    "E-cell",
     "Entrepreneurship",
     "Startup",
     "Internship",
+    "Skills",
     "Workshop",
     "Courses",
+    "Conference",
     "NCC",
     "Campaigning",
   ];

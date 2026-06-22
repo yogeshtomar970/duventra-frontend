@@ -13,7 +13,8 @@ export default function UploadPost() {
   const [eventTypes, setEventTypes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", ok: true });
-
+  const [startDate, setStartDate] = useState("");
+  const [lastDate, setLastDate] = useState("");
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
   // Guard: only society can upload posts
@@ -77,7 +78,10 @@ export default function UploadPost() {
       setMessage({ text: "Description is required", ok: false });
       return;
     }
-
+    if (startDate && lastDate && new Date(lastDate) < new Date(startDate)) {
+      setMessage({ text: "The last date cannot be earlier than the start date.", ok: false });
+      return;
+    }
     const token = localStorage.getItem("token");
     setLoading(true);
     setMessage({ text: "", ok: true });
@@ -88,6 +92,8 @@ export default function UploadPost() {
     formData.append("formLink", formLink);
     formData.append("societyId", user.id);
     formData.append("eventTypes", JSON.stringify(eventTypes));
+    if (startDate) formData.append("startDate", startDate);
+    if (lastDate) formData.append("lastDate", lastDate);
 
     try {
       const res = await fetch(`${API_BASE_URL}/api/post/upload`, {
@@ -185,7 +191,32 @@ export default function UploadPost() {
           value={formLink}
           onChange={(e) => setFormLink(e.target.value)}
         />
-
+        <div className="upload-date-row">
+          <div className="upload-date-field">
+            <label>
+              Event Start Date <span className="optional">(optional)</span>
+            </label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
+          <div className="upload-date-field">
+            <label>
+              Event Last Date <span className="optional">(optional)</span>
+            </label>
+            <input
+              type="date"
+              value={lastDate}
+              min={startDate || undefined}
+              onChange={(e) => setLastDate(e.target.value)}
+            />
+          </div>
+        </div>
+        <p className="upload-date-hint">
+          Setting an end date ensures the post appears as "Upcoming" until the event concludes.
+        </p>
         {message.text && (
           <p className={message.ok ? "upload-ok" : "upload-err"}>
             {message.text}

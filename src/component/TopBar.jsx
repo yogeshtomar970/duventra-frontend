@@ -10,6 +10,7 @@ export default function TopBar({ onSearch, onFilterChange }) {
     selectedOptions,
     showFilter,
     selectedCollege,
+    upcomingOnly,
     isAllActive,
     dropdownRefs,
     setSearchActive,
@@ -19,6 +20,7 @@ export default function TopBar({ onSearch, onFilterChange }) {
     handleCollegeSelect,
     handleClearAll,
     handleSearchChange,
+    toggleUpcoming,
   } = useTopBar({ onSearch, onFilterChange });
 
   return (
@@ -27,6 +29,13 @@ export default function TopBar({ onSearch, onFilterChange }) {
 
         {/* ── Filter Pills ── */}
         <div className="menu-buttons">
+          <button
+            className={`pill-btn pill-btn--upcoming ${upcomingOnly ? "active" : ""}`}
+            onClick={toggleUpcoming}
+          >
+            🟢 Upcoming
+          </button>
+
           <button
             className={`pill-btn ${isAllActive ? "active" : ""}`}
             onClick={handleClearAll}

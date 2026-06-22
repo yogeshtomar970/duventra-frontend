@@ -9,7 +9,7 @@ const FEEDBACK_TYPES = [
 
 const PLACEHOLDERS = {
   bug:     "Describe the bug — what happened, what did you expect?",
-  feature: "What feature would make DU Eventra better for you?",
+  feature: "What feature would make Duventra better for you?",
   other:   "Share any thoughts or suggestions...",
 };
 

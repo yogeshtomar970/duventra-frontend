@@ -87,18 +87,5 @@ export const contactOptions = [
     action: () => window.open("mailto:support@dueventra.in"),
     color: "#6c63ff",
   },
-  {
-    icon: "💬",
-    label: "WhatsApp",
-    value: "Chat with us",
-    action: () => window.open("https://wa.me/919999999999"),
-    color: "#25d366",
-  },
-  {
-    icon: "📸",
-    label: "Instagram",
-    value: "@dueventra",
-    action: () => window.open("https://instagram.com/dueventra"),
-    color: "#e1306c",
-  },
+  
 ];

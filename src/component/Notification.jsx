@@ -2,28 +2,22 @@ import React from "react";
 import BottomNav from "./BottomNav";
 import "../styles/Notification.css";
 
-// Components
 import NotificationHeader from "../component/NotificationHeader";
 import NotifTabs from "../component/NotifTabs";
 import NotifEmpty from "../component/NotifEmpty";
 import NotificationCard from "../component/NotificationCard";
 import NotifNotLoggedIn from "../component/NotifNotLoggedIn";
 
-// Hook
 import useNotifications from "../hooks/useNotifications";
 
 export default function Notification() {
   const {
-    userId,
-    loading,
-    activeTab,
-    setActiveTab,
-    displayed,
-    unreadCount,
-    tabUnread,
-    markAllRead,
-    handleNotifClick,
-    handleAvatarClick,
+    userId, loading, activeTab, setActiveTab,
+    displayed, unreadCount, tabUnread,
+    markAllRead, handleNotifClick, handleAvatarClick,
+    selectMode, selectedIds, allSelected,
+    toggleSelectMode, selectAll, deselectAll,
+    deleteSelected, deleteAll,
   } = useNotifications();
 
   if (!userId) return <NotifNotLoggedIn />;
@@ -35,15 +29,26 @@ export default function Notification() {
         <NotificationHeader
           unreadCount={unreadCount}
           onMarkAllRead={markAllRead}
+          selectMode={selectMode}
+          selectedCount={selectedIds.size}
+          totalCount={displayed.length}
+          allSelected={allSelected}
+          onToggleSelectMode={toggleSelectMode}
+          onSelectAll={selectAll}
+          onDeselectAll={deselectAll}
+          onDeleteSelected={deleteSelected}
+          onDeleteAll={deleteAll}
         />
 
-        <NotifTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          tabUnread={tabUnread}
-        />
+        {!selectMode && (
+          <NotifTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            tabUnread={tabUnread}
+          />
+        )}
 
-        <div className="notification-list">
+        <div className={`notification-list ${selectMode ? "select-mode-active" : ""}`}>
           {(loading || displayed.length === 0) && (
             <NotifEmpty loading={loading} activeTab={activeTab} />
           )}
@@ -55,6 +60,8 @@ export default function Notification() {
                 note={note}
                 onClick={handleNotifClick}
                 onAvatarClick={handleAvatarClick}
+                selectMode={selectMode}
+                isSelected={selectedIds.has(note._id)}
               />
             ))}
         </div>

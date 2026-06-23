@@ -131,6 +131,7 @@ export default function useNotifications() {
   
   // ── Card click → go to content ────────────────────────────────────────────
   const handleNotifClick = async (note) => {
+    if (selectMode) { toggleSelectOne(note._id); return; } 
     if (!note.isRead) await markOneRead(note._id);
     if (note.sourceType === "news" && note.postId) {
       navigate("/news", { state: { scrollToNewsId: note.postId } });

@@ -76,12 +76,18 @@ export default function TopBar({ onSearch, onFilterChange }) {
 
         {/* ── Search + Filter Icon ── */}
         <div className="right-section">
-          <div className={`search-box ${searchActive ? "active" : ""}`}>
-            <FaSearch onClick={() => setSearchActive(!searchActive)} />
+          <div
+            className={`search-box ${searchActive ? "active" : ""}`}
+            onClick={() => { if (!searchActive) setSearchActive(true); }}
+          >
+            <FaSearch onClick={(e) => { e.stopPropagation(); setSearchActive(!searchActive); }} />
             <input
               type="text"
               placeholder="Search..."
               onChange={handleSearchChange}
+              tabIndex={searchActive ? 0 : -1}
+              readOnly={!searchActive}
+              onFocus={(e) => { if (!searchActive) e.target.blur(); }}
             />
           </div>
 

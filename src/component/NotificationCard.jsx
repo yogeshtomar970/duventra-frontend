@@ -2,16 +2,24 @@ import React from "react";
 import NotifIcon from "./NotifIcon";
 import { timeAgo, resolveAvatar, resolveThumb } from "../notificationHelpers.js";
 
-/**
- * NotificationCard
- * Single notification row — avatar, message, time, thumbnail, unread dot.
- */
-export default function NotificationCard({ note, onClick, onAvatarClick }) {
+export default function NotificationCard({
+  note, onClick, onAvatarClick,
+  selectMode, isSelected,
+}) {
   return (
     <div
-      className={`notification-card ${!note.isRead ? "unread" : ""}`}
+      className={`notification-card ${!note.isRead ? "unread" : ""} ${isSelected ? "notif-selected" : ""}`}
       onClick={() => onClick(note)}
     >
+      {/* Checkbox — sirf select mode mein */}
+      {selectMode && (
+        <div className="notif-checkbox">
+          <div className={`notif-check-circle ${isSelected ? "checked" : ""}`}>
+            {isSelected && <span>✓</span>}
+          </div>
+        </div>
+      )}
+
       {/* Avatar + type icon */}
       <div
         className="notif-avatar-wrap"
@@ -46,8 +54,8 @@ export default function NotificationCard({ note, onClick, onAvatarClick }) {
         </div>
       )}
 
-      {/* Unread dot */}
-      {!note.isRead && <span className="unread-dot" />}
+      {/* Unread dot — select mode mein nahi dikhega */}
+      {!note.isRead && !selectMode && <span className="unread-dot" />}
     </div>
   );
 }

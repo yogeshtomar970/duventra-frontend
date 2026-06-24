@@ -141,7 +141,7 @@ export default function InstallGuide() {
               key={i}
               style={{
                 ...styles.dot,
-                background: i === currentStep ? "#6C63FF" : i < currentStep ? "#a29bf5" : "#e0e0e0",
+                background: i === currentStep ? "#b5651d" : i < currentStep ? "#b5651d" : "#e0e0e0",
                 width: i === currentStep ? 20 : 8,
               }}
             />
@@ -183,7 +183,7 @@ export default function InstallGuide() {
 const styles = {
   overlay: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #6C63FF 0%, #3f3d8f 100%)",
+    background: "#b5651d",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -234,7 +234,7 @@ const styles = {
   },
   browserText: {
     fontSize: 13,
-    color: "#6C63FF",
+    color: "#b5651d",
     fontWeight: 600,
   },
   dots: {
@@ -259,7 +259,7 @@ const styles = {
   stepNum: {
     fontSize: 11,
     fontWeight: 700,
-    color: "#6C63FF",
+    color: "#b5651d",
     textTransform: "uppercase",
     letterSpacing: 1,
     marginBottom: 8,
@@ -296,12 +296,12 @@ const styles = {
     padding: "12px 0",
     borderRadius: 12,
     border: "none",
-    background: "linear-gradient(135deg, #6C63FF, #3f3d8f)",
+    background: "#b5651d",
     color: "#fff",
     fontSize: 15,
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: "0 4px 15px rgba(108,99,255,0.4)",
+    boxShadow: "0 4px 15px #b5641d59",
   },
   tip: {
     margin: 0,

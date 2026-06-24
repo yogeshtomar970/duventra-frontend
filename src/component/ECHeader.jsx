@@ -95,7 +95,7 @@ export default function ECHeader({
                       className="ec-dot-item ec-dot-item--danger"
                       onClick={() => { setShowDotMenu(false); onDeletePost(); }}
                     >
-                      🗑️ Delete Post
+                      Delete Post
                     </button>
                   )}
                 </div>

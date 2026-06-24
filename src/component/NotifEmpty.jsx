@@ -23,7 +23,7 @@ export default function NotifEmpty({ loading, activeTab }) {
       <p>No {activeTab !== "all" ? activeTab : ""} notifications yet</p>
       <span className="notif-empty-sub">
         {activeTab === "all"
-          ? "Jab koi aapki post like ya comment karega, yahan dikhega"
+          ? "When someone likes or comments on your post, it will appear here."
           : `No ${TYPE_CONFIG[activeTab]?.label?.toLowerCase()} notifications`}
       </span>
     </div>

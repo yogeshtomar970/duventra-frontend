@@ -12,3 +12,23 @@ body { margin: 0; }
     --navbar-h: 50px;
   }
 }
+/* ── Global page transition ── */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter {
+  animation: pageFadeIn 0.3s ease both;
+}
+
+/* ── Global smooth scroll ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Skeleton shimmer global (fallback) ── */
+@keyframes globalShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

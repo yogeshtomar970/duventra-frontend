@@ -414,7 +414,18 @@ export default function ProfilePage() {
             onSocietyUpdate={(updated) => setSociety(updated)}
           />
         )}
-
+          <div
+          className="sp-card"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "1.5rem",
+            gap: "1rem",
+            gridTemplateColumns: "unset",
+            marginTop: 8,
+            marginBottom: 4,
+          }}
+        >
         {/* ── Members / Following / Suggestions ── */}
         <div className="gradient-card">
           {/* Society Members */}
@@ -601,7 +612,7 @@ export default function ProfilePage() {
             )}
           </div>
         </div>
-
+          </div>
         {/* ── Post / News Tab ── */}
         <PostNewsTab
           activeTab={activeTab}

@@ -56,7 +56,7 @@
 /* ── Info Lines ── */
 .smc-line {
   font-size: 11px;
-  color: #8b6e5a;
+  color: #b5651d;
   margin: 3px 0;
   line-height: 1.4;
 }
@@ -83,14 +83,14 @@
 
 /* ── Joined State ── */
 .smc-join--joined {
-  background: #f9f5f0;
-  color: #8b6e5a;
+  background: #16a34a;
+  color: white;
   border: 1px solid #e8e0d6;
 }
 
 .smc-join--joined:hover {
-  background: #f0e8df;
-  color: #6b4c2a;
+  background: #0c5a28;
+  color: white;
 }
 
 /* ── Responsive ── */

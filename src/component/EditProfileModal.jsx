@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import API_BASE_URL from "../config/api.js";
 import "../styles/EditProfileModal.css";
 
-export default function EditProfileModal({ onClose, onSocietyUpdate }) {
+export default function EditProfileModal({ onClose, onSocietyUpdate, society }) {
   const [modalType, setModalType] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(society?.bio || "");
 
   const handleSaveImage = async () => {
     if (!selectedImage) return alert("Select image first");

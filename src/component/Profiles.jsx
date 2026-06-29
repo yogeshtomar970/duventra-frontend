@@ -62,6 +62,7 @@ export default function Studentprofile() {
   // ── Early returns ──
   if (loading) return <FeedLoader />;
 
+  if (notLoggedIn)
     return <div style={{ textAlign: "center", padding: "60px 20px" }}><h3>Please login to view your profile</h3></div>;
   if (!student)
     return <div style={{ textAlign: "center", padding: "60px 20px" }}><h3>Student profile not found</h3></div>;

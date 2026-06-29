@@ -23,3 +23,4 @@ export default function NewsFeedState({ loading, error, empty, onRetry }) {
 
   return null;
 }
+

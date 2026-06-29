@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { FiCamera, FiX, FiUser, FiBook, FiCalendar } from "react-icons/fi";
 import "../styles/EditStudentProfileModal.css";
 
 export default function EditStudentProfileModal({
@@ -15,56 +16,91 @@ export default function EditStudentProfileModal({
   onSave,
   onClose,
 }) {
+  const fileRef = useRef(null);
   if (!showModal) return null;
 
+  const avatarSrc =
+    previewUrl || getImageUrl(student?.profilePic, defaultAvatar);
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-        <h3>Edit Profile</h3>
+    <div className="esp-overlay" onClick={onClose}>
+      <div className="esp-sheet" onClick={(e) => e.stopPropagation()}>
 
-        <label className="esp-label">Profile Image</label>
-        {(previewUrl || student.profilePic) && (
-          <img
-            src={previewUrl || getImageUrl(student.profilePic, defaultAvatar)}
-            alt="preview"
-            className="esp-preview-img"
+        {/* ── Header ── */}
+        <div className="esp-header">
+          <button className="esp-close-btn" onClick={onClose}>
+            <FiX size={20} />
+          </button>
+          <h3 className="esp-title">Edit Profile</h3>
+          <button className="esp-save-top-btn" onClick={onSave}>
+            Save
+          </button>
+        </div>
+
+        {/* ── Avatar Upload ── */}
+        <div className="esp-avatar-section">
+          <div className="esp-avatar-wrap" onClick={() => fileRef.current?.click()}>
+            <img src={avatarSrc} alt="avatar" className="esp-avatar" />
+            <div className="esp-camera-overlay">
+              <FiCamera size={18} color="#fff" />
+            </div>
+          </div>
+          <p className="esp-avatar-hint">Tap to change photo</p>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            className="esp-hidden-file"
+            onChange={(e) => onImageChange(e.target.files[0])}
           />
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          className="esp-file-input"
-          onChange={(e) => onImageChange(e.target.files[0])}
-        />
+        </div>
 
-        <label className="esp-label">College Name</label>
-        <input
-          type="text"
-          className="esp-text-input"
-          value={editCollege}
-          onChange={(e) => setEditCollege(e.target.value)}
-          placeholder="College name likhein..."
-        />
+        {/* ── Info (read-only) ── */}
+        <div className="esp-info-row">
+          <FiUser size={15} className="esp-info-icon" />
+          <span className="esp-info-text">{student?.name || "—"}</span>
+        </div>
 
-        <label className="esp-label">Year</label>
-        <select
-          className="esp-select"
-          value={editYear}
-          onChange={(e) => setEditYear(e.target.value)}
-        >
-          <option value="">Select Year</option>
-          <option value="1st Year">1st Year</option>
-          <option value="2nd Year">2nd Year</option>
-          <option value="3rd Year">3rd Year</option>
-          <option value="4th Year">4th Year</option>
-        </select>
+        {/* ── Form Fields ── */}
+        <div className="esp-fields">
 
-        <button className="edit-btn esp-save-btn" onClick={onSave}>
+          <div className="esp-field">
+            <label className="esp-label">
+              <FiBook size={13} /> College
+            </label>
+            <input
+              type="text"
+              className="esp-input"
+              value={editCollege}
+              onChange={(e) => setEditCollege(e.target.value)}
+              placeholder="College name likhein..."
+            />
+          </div>
+
+          <div className="esp-field">
+            <label className="esp-label">
+              <FiCalendar size={13} /> Year
+            </label>
+            <div className="esp-year-pills">
+              {["1st Year", "2nd Year", "3rd Year", "4th Year"].map((yr) => (
+                <button
+                  key={yr}
+                  className={`esp-year-pill ${editYear === yr ? "active" : ""}`}
+                  onClick={() => setEditYear(yr)}
+                >
+                  {yr}
+                </button>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── Save Button ── */}
+        <button className="esp-save-btn" onClick={onSave}>
           Save Changes
         </button>
-        <button className="share-btn esp-cancel-btn" onClick={onClose}>
-          Cancel
-        </button>
+
       </div>
     </div>
   );

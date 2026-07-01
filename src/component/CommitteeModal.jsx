@@ -48,7 +48,7 @@ export default function CommitteeModal({ committee, onClose, onSocietyUpdate }) 
   };
 
   const handleSearchByName = async () => {
-    if (searchName.trim().length < 2) return alert("Kam se kam 2 characters likhein");
+    if (searchName.trim().length < 2) return alert("Write at least 2 characters.");
     try {
       const res = await fetch(
         `${API_BASE_URL}/api/student/search/by-name?name=${encodeURIComponent(searchName)}`
@@ -58,7 +58,7 @@ export default function CommitteeModal({ committee, onClose, onSocietyUpdate }) 
         setNameResults(data.data);
         setFoundStudent(null);
       } else {
-        alert("Koi student nahi mila");
+        alert("No student was found.");
       }
     } catch {}
   };
@@ -81,7 +81,7 @@ export default function CommitteeModal({ committee, onClose, onSocietyUpdate }) 
   };
 
   const handleRemove = async (studentId) => {
-    if (!window.confirm("Kya aap is member ko committee se remove karna chahte hain?")) return;
+    if (!window.confirm("Do you want to remove this member from the committee?")) return;
     const user = JSON.parse(localStorage.getItem("user"));
     try {
       const res = await fetch(`${API_BASE_URL}/api/society/committee/${user.id}`, {
@@ -137,7 +137,7 @@ export default function CommitteeModal({ committee, onClose, onSocietyUpdate }) 
               </button>
 
               {!committee?.length ? (
-                <p className="cm2-empty">Abhi koi member nahi hai</p>
+                <p className="cm2-empty">There are no members yet.</p>
               ) : (
                 <div className="cm2-list">
                   {committee.map((member, index) => (

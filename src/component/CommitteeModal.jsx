@@ -245,7 +245,7 @@ export default function CommitteeModal({ committee, onClose, onSocietyUpdate }) 
                   <input
                     className="cm2-input"
                     type="text"
-                    placeholder="Student ka naam likhein..."
+                    placeholder="Enter the name of the student..."
                     value={searchName}
                     onChange={(e) => setSearchName(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSearchByName()}

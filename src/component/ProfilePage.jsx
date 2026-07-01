@@ -299,7 +299,7 @@ export default function ProfilePage() {
   };
 
   const handleDeletePost = async (post) => {
-    if (!window.confirm("Kya aap sach mein yeh post delete karna chahte hain?"))
+    if (!window.confirm("Do you really want to delete this post?"))
       return;
     const user = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");

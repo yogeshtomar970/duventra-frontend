@@ -36,7 +36,7 @@ export default function StudentSignup() {
     setError("");
     const { name, rollNo, course, collegeName } = verifyData;
     if (!name || !rollNo || !course || !collegeName)
-      return setError("Sab fields fill karein");
+      return setError("Fill all fields.");
 
     setLoading(true);
     try {
@@ -48,7 +48,7 @@ export default function StudentSignup() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Verification failed");
 
-      setInfo("✅ Details verified! Aage badhein.");
+      setInfo("✅ Details verified! Proceed.");
       setStep(2);
     } catch (err) {
       setError(err.message);

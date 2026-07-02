@@ -1,28 +1,42 @@
-import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { showSuccess, showError } from "../utils/toast.js";
+import API_BASE_URL from "../config/api.js";
 
-// Styles
-import "../styles/Login.css";
+/**
+ * useLogin
+ * Email/password state aur login API call handler.
+ */
+export default function useLogin() {
+  const navigate = useNavigate();
+  const [email,    setEmail]    = useState("");
+  const [password, setPassword] = useState("");
 
-// Components
-import LoginLogo from "../component/LoginLogo";
-import LoginForm from "../component/LoginForm";
+  const handleLogin = async () => {
+    
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-// Hook
-import useLogin from "../hooks/useLogin";
+      const result = await res.json();
 
-export default function Login() {
-  const { email, setEmail, password, setPassword, handleLogin } = useLogin();
+      if (res.ok) {
+        showSuccess(result.message || "Login successful!");
+        localStorage.setItem("token", result.token);
+        const userData = { ...result.user, role: result.role };
+        localStorage.setItem("user", JSON.stringify(userData));
+        window.dispatchEvent(new StorageEvent("storage", { key: "user" }));
+        navigate("/");
+      } else {
+        showError(result.message || "Login failed");
+      }
+    } catch {
+      showError("Server error");
+    }
+  };
 
-  return (
-    <div className="logincontainer">
-      <LoginLogo />
-      <LoginForm
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        onLogin={handleLogin}
-      />
-    </div>
-  );
+  return { email, setEmail, password, setPassword, handleLogin };
 }

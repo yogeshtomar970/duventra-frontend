@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { showSuccess, showError } from "../utils/toast.js";
+import { showSuccess, showError } from "../utils/Toast.js";
 import API_BASE_URL from "../config/api.js";
 
 /**
